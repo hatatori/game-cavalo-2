@@ -11,6 +11,15 @@ body{
     height: 100vh;
 }
 
+.load{
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
 .janela{
     /* width: 800px;
     height: 600px;   */
