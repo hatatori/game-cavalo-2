@@ -335,11 +335,9 @@ grandStands.map((e,i)=>{
     // e.y = (Screen.height - e.height) / 3
     // e.topP(15)
     e.y = Screen.height/2 - (e.height/1.7)
-    
     e.setHeight(200)
-
-    e.left(i * e.width * e.quant)
-    e.speed = 3
+    e.left(i * e.width)
+    e.speed = 5
 })
 
 fencesTop.map((e,i)=>{
@@ -445,11 +443,11 @@ function loop(){
     fencesBottom.map(e=>{ e.draw(); e.refresh() })
     plantsBottom.map(e=>{ e.draw(); e.refresh() })
     
-    window.requestAnimationFrame(loop)
+    requestAnimationFrame(loop)
 }
 
-window.addEventListener('DOMContentLoaded',e=>{
-    // loop()
-    window.requestAnimationFrame(loop)
-})
+// window.addEventListener('DOMContentLoaded',e=>{
+loop()
+    // requestAnimationFrame(loop)
+// })
 
