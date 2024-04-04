@@ -60,7 +60,7 @@ class Horse{
     x = 0
     y = 0
     frame = 0
-    velocity = 5
+    velocity = 0
     width = 227
     height = 128
     constructor(img_url){
@@ -94,7 +94,16 @@ class Horse{
         )
     }
     refresh(){
+        // this.frame += 5
         this.frame += 5
+
+        // if(this.x > 0)
+        this.x += this.velocity
+
+        
+
+        if(this.velocity > 0) this.velocity = this.velocity - 0.01;
+        if(this.velocity < 0) this.velocity = this.velocity + 0.01;
     }
     
     bottom(n){ this.y = Screen.height - this.height - n }
