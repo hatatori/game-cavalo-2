@@ -168,12 +168,11 @@ class Cenario{
     repeat = true
     
     constructor(img_name, quant=1, x=0, y=0, repeat){
-        this.image_name = img_name
-        this.quant = quant
+        // this.image_name = img_name
         
+        this.quant = quant
         this.img = new Image()
         this.img.src = Images[img_name]
-        
         
         this.img.onload=()=>{
             this.w = this.img.width
@@ -457,5 +456,13 @@ function loop(){
     
     requestAnimationFrame(loop)
 }
-loop()
+
+window.addEventListener('DOMContentLoaded',()=>{
+    loop()
+})
+
+// setTimeout(()=>{
+//     loop()
+// }, 2000)
+// loop()
     
