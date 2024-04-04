@@ -85,7 +85,7 @@ class Horse{
         
         this.frame += 5
         
-        this.x += this.velocity/60
+        this.x += this.velocity/100
         
         if(this.velocity > 0) this.velocity = this.velocity - 0.5;
         if(this.velocity < 0) this.velocity = this.velocity + 0.5;
@@ -96,7 +96,7 @@ class Horse{
         // }
 
         
-        if(this.x >= Screen.width-this.width*2){
+        if(this.x >= Screen.width/4){
             // const rand2 = Math.random() * 100
             this.velocity = this.velocity * 0.97
             // this.velocity = this.velocity * rand2/100
@@ -105,20 +105,34 @@ class Horse{
         // if(this.x >= Screen.width-this.width*1.5){
         //     this.velocity = this.velocity - 4
         // }
-        if(this.x >= Screen.width-this.width*1.5){
-            const rand = Math.random() * 100
+
+        if(this.x < 0){
+            // const rand = Math.random() * 200
+            // this.velocity = 0
+            this.go()
+        }
+
+        if(this.x >= Screen.width-this.width){
+            const rand = Math.random() * 200
             this.velocity = this.velocity - rand
         }
 
         this.sound(this.num)
 
-        if(this.velocity.toFixed(1)==0) this.go()
+        if(this.velocity.toFixed(1)==0) 
+            this.go()
+
+
+
+
         // console.log(this.velocity.toFixed(1))
     }
     go(){
-        let r = Math.random()*100|0
-        this.velocity = r
+        let r1 = Math.random()*300|0
+        let r2 = Math.random()*300|0
+        this.velocity = r2-r1
     }
+
 
     sound(n){
         // if(n == 117 ){ let r = (Math.random()*10)|0 ; audio_horse[r].play();}
@@ -232,6 +246,15 @@ horses.map((e,i)=>{
     e.bottomP(38 - i*5.5)
     e.frame = i*23
 })
+
+const Mechanic = {
+    horseWin(number_horse){
+        horses.map(e=>{
+            e.velocity = -100
+        })
+        horses[number_horse].velocity = 500
+    }
+}
 
 //AVANÇAR CAVALOS
 // horses.map((e,i)=>{
