@@ -458,7 +458,9 @@ function loop(){
 }
 
 window.addEventListener('DOMContentLoaded',()=>{
-    loop()
+    setTimeout(()=>{
+        loop()
+    }, 2000)
 })
 
 // setTimeout(()=>{
