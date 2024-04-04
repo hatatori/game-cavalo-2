@@ -1,0 +1,28 @@
+*{
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+body{
+    background-color: black;
+    width: 100%;
+    height: 100vh;
+}
+
+.janela{
+    /* width: 800px;
+    height: 600px;   */
+    background-color: #00000011;    
+    /* resize: both;
+    overflow: auto; */
+}
+
+/* .gameScreenCanvas{ */
+    /* border: solid 1px black; */
+    /* overflow: auto;
+    resize: both;
+    overflow: auto; */
+    /* background-color: #00000022; */
+/* } */
+
