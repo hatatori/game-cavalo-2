@@ -47,14 +47,14 @@ const Images = {
     finishLine: './art/finishLine.png',
 }
 
-const Imgs = {}
+// const Imgs = {}
 
-Object.keys(Images).map(e=>{
-    const link = Images[e]
-    const img = new Image()
-    img.src = link
-    Imgs[e] = img
-})
+// Object.keys(Images).map(e=>{
+//     const link = Images[e]
+//     const img = new Image()
+//     img.src = link
+//     Imgs[e] = img
+// })
 
 class Horse{
     x = 0
@@ -135,7 +135,10 @@ class Cenario{
         //     this.height = this.img_el.height
         // }
 
-        this.img = Imgs[this.image_name].cloneNode(true)
+        this.img = new Image()
+        this.img.src = this.img_el.src
+        // this.img = Imgs[this.image_name].cloneNode(true)
+        // this.img = Imgs[this.image_name].cloneNode(true)
         this.ww = this.img.width
         this.hh = this.img.height
         this.x = x
@@ -389,8 +392,6 @@ plantsTop.map((e,i)=>{
 })
 
 
-
-
 const velocidade = 1
 // refresh_list.map(e=>e.speed = velocidade)
 
@@ -401,7 +402,6 @@ function loop(){
     ctx.fillRect(0, 0, Screen.width, Screen.height);
 
     background.draw()
-    
 
     // mountains[0].draw()
     // mountains[1].draw()
