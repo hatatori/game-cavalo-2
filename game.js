@@ -98,12 +98,12 @@ class Horse{
         this.frame += 5
 
         // if(this.x > 0)
-        this.x += this.velocity
+        this.x += this.velocity/30
 
         
 
-        if(this.velocity > 0) this.velocity = this.velocity - 0.01;
-        if(this.velocity < 0) this.velocity = this.velocity + 0.01;
+        if(this.velocity > 0) this.velocity = this.velocity - 0.5;
+        if(this.velocity < 0) this.velocity = this.velocity + 0.5;
     }
     
     bottom(n){ this.y = Screen.height - this.height - n }
@@ -135,9 +135,9 @@ class Cenario{
     constructor(img_name, quant=1, x=0, y=0, repeat){
         this.image_name = img_name
         this.quant = quant
+        
         this.img_el = new Image()
         this.img_el.src = Images[img_name]
-        
 
         // this.img_el.onload=()=>{
         //     this.width = this.img_el.width
@@ -145,9 +145,15 @@ class Cenario{
         // }
 
         this.img = new Image()
-        this.img.src = this.img_el.src
+        this.img.src = Images[img_name]
         // this.img = Imgs[this.image_name].cloneNode(true)
         // this.img = Imgs[this.image_name].cloneNode(true)
+
+        this.img.onload=()=>{
+            this.w = this.img.width
+            this.h = this.img.height
+        }
+
         this.ww = this.img.width
         this.hh = this.img.height
         this.x = x
@@ -158,13 +164,12 @@ class Cenario{
     }
 
     draw(){
-        this.img = this.img_el
-        this.img.onload=()=>{
-            this.w = this.img.width
-            this.h = this.img.height
-            
-        }
-
+        
+        // this.img = this.img_el
+        // this.img.onload=()=>{
+        //     this.w = this.img.width
+        //     this.h = this.img.height
+        // }
         
         for(let i=0;i<this.quant;i++){
             ctx.drawImage(
@@ -439,7 +444,7 @@ function loop(){
     window.requestAnimationFrame(loop)
 }
 
-window.addEventListener('DOMContentLoaded',e=>{
-    loop()
-    // window.requestAnimationFrame(loop)
-})
+// window.addEventListener('DOMContentLoaded',e=>{
+    // loop()
+    window.requestAnimationFrame(loop)
+// })
