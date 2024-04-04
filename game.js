@@ -427,9 +427,10 @@ function loop(){
     fencesBottom.map(e=>{ e.draw(); e.refresh() })
     plantsBottom.map(e=>{ e.draw(); e.refresh() })
     
-    requestAnimationFrame(loop)
+    window.requestAnimationFrame(loop)
 }
 
 window.addEventListener('DOMContentLoaded',e=>{
-    requestAnimationFrame(loop)
+    loop()
+    // window.requestAnimationFrame(loop)
 })
