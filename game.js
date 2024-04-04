@@ -132,12 +132,18 @@ class Cenario{
     h = 0
     repeat = true
 
+    
+
     constructor(img_name, quant=1, x=0, y=0, repeat){
         this.image_name = img_name
         this.quant = quant
         
-        this.img_el = new Image()
-        this.img_el.src = Images[img_name]
+        // this.img_el = new Image()
+        // this.img_el.src = Images[img_name]
+
+        // this.img = new Image()
+        // this.img.src = img_url
+        // console.log(Images[img_name])
 
         // this.img_el.onload=()=>{
         //     this.width = this.img_el.width
@@ -420,8 +426,6 @@ function loop(){
     // mountains[0].draw()
     // mountains[1].draw()
 
-    
-
     mountains.map((e,i)=>{ e.draw() })
     
     hills.map(e=>{ e.draw(); e.refresh(); })
@@ -444,7 +448,8 @@ function loop(){
     window.requestAnimationFrame(loop)
 }
 
-// window.addEventListener('DOMContentLoaded',e=>{
+window.addEventListener('DOMContentLoaded',e=>{
     // loop()
     window.requestAnimationFrame(loop)
-// })
+})
+
