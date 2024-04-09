@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- <script defer src="./script.js"></script> -->
     <script defer src="./script.js"></script>
 </head>
 <body>
-    <video loop id="video" autoplay controls width="500" src="./stadium2.mp4"></video>
-    <div>
-        <input type="range" min="0" max="255" id="ran1">
-        <input type="range" min="0" max="255" id="ran2">
-        <input type="range" min="0" max="255" id="ran3">
+
+    <input type="range" min="0" max="300" id="r1" style="width:100%; display: block">
+    <input type="range" min="0" max="300" id="r2" style="width:100%; display: block">
+
+    <div style="display: none;">
+        <img src="./grandstand_spritesheet.png">
+        <img src="./imgs/test.jpg">
     </div>
-    <canvas id="canvas" style="border: solid black 1px;"></canvas>
+    
+    
+    <canvas id="canvas" style="border: solid black 1px;" width="1080" height="608"></canvas>
 </body>
 </html>

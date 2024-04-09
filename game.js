@@ -29,10 +29,12 @@ const Images = {
     grass: './art/grass.png',
     fence: './art/fence.png',
     line: './art/line.png',
+    line_d: './art/line_d.png',
     grandstand: './art/grandstand.png',
     finishLine: './art/finishLine.png',
     city: './art/city.png',
     cloud: './art/cloud.png',
+    arrow_down: './art/arrow_down.png',
 }
 
 const audio_horse = [
@@ -47,6 +49,118 @@ const audio_horse = [
     new Audio('./som/c9.mp3'),
     new Audio('./som/c10.mp3')
 ]
+
+class Sprites{
+
+    pic = {
+        w: 5230/10,
+        h: 3870/10,
+        x: 0,
+        y: 0,
+        frame:0,
+        framespeed: 1,
+    }
+    
+    picLoaded = {
+        w: 5230,
+        h: 3870,
+        l: 10,
+        c: 10,
+        frameLimit: 120
+    }
+
+    width=100;
+    height=100;
+    x=0;
+    y=0;
+    speed=1
+     
+    constructor(img_url, cols, lins){
+
+        this.sprite = new Image()
+        this.sprite.src = img_url
+        this.picLoaded.frameLimit = cols*lins
+
+        this.picLoaded.c = cols
+        this.picLoaded.l = lins
+
+        const w = this.sprite.width
+        const h = this.sprite.height
+
+        // this.pic.w = w/cols
+        // this.pic.h = h/lins
+
+        this.w = w/cols
+        this.h = h/lins
+
+        this.width = w/cols
+        this.height = h/lins
+
+        this.sprite.onload=()=>{
+            this.picLoaded.w = w
+            this.picLoaded.h = h
+        }
+    }
+
+    draw(){
+        
+        // ctx.beginPath(); 
+        // ctx.fillStyle = 'white'
+        // ctx.rect(0, 0, 1920, 1080);
+        // ctx.fill();
+
+        this.pic.frame = this.pic.frame%this.picLoaded.frameLimit
+        
+        const c = (this.pic.frame % this.picLoaded.c) * this.w
+        const l = (this.pic.frame / this.picLoaded.c|0) * this.h
+
+        ctx.drawImage(
+            this.sprite,
+            c, l,
+            this.w, this.h,
+            this.x, this.y,
+            this.width, this.height, //tamanho final da imagem
+        );
+
+    }
+    
+    refresh(){
+        this.pic.frame++
+    }
+
+    walk(){
+        this.pic.frame+=this.pic.framespeed
+        this.x-=this.speed
+        
+        // if(this.x > -this.width){
+        //     this.x = Screen.width
+        // }
+        if(-this.x > this.width) this.x = Screen.width;
+    }
+
+    
+    bottom(n){ this.y = Screen.height - this.height - n }
+    bottomP(n){ this.y = Screen.height - this.height - Screen.height * (n/100) }
+    top(n){ this.y = n }
+    topP(n){ this.y = Screen.height * n/100 }
+    right(n){ this.x = Screen.width - this.width - n }
+    left(n){ this.x = n }
+    leftP(n){ this.x = Screen.width - this.width - Screen.width * (n/100) }
+
+    setWidth(n){
+        const k = n/this.h
+        this.height = n
+        this.width = this.w*k
+    }
+    setHeight(n){
+        const k = n/this.w
+        this.width = n
+        this.height = this.h*k
+    }
+    
+
+}
+
 
 class Horse{
     x = 0
@@ -95,42 +209,57 @@ class Horse{
         //     this.x = Screen.width-this.width
         // }
 
-        
-        if(this.x >= Screen.width/4){
-            // const rand2 = Math.random() * 100
-            this.velocity = this.velocity * 0.97
-            // this.velocity = this.velocity * rand2/100
-        }
-
-        // if(this.x >= Screen.width-this.width*1.5){
-        //     this.velocity = this.velocity - 4
+        // if(this.x >= Screen.width-this.width){
+            // this.x = Screen.width-this.width
+            // this.velocity = this.velocity * 0.98
         // }
 
-        if(this.x < 0){
-            // const rand = Math.random() * 200
-            // this.velocity = 0
-            this.go()
-        }
+        
+        // if(this.x >= Screen.width/4){
+        //     this.velocity = this.velocity * 0.97
+        // }
+            
+        // if(this.x < 0){
+        //     this.go()
+        // }
+
+        // limite direita
+        // if(this.x >= Screen.width-this.width){
+        //     // const rand = Math.random() * 200
+        //     this.velocity = 0
+        //     this.x = Screen.width-this.width
+        // }
 
         if(this.x >= Screen.width-this.width){
-            const rand = Math.random() * 200
-            this.velocity = this.velocity - rand
+            // const rand = Math.random() * 200
+            this.velocity *= 0.9
+            // this.x = Screen.width-this.width
         }
 
         this.sound(this.num)
 
-        if(this.velocity.toFixed(1)==0) 
+        // if(this.velocity.toFixed(1)==0 && this.x < Screen.width/3) {
+        //     this.go()
+        // }
+
+
+        if(this.velocity.toFixed(1)<=0 && this.x < Screen.width/5) {
             this.go()
+        }
 
 
+        // this.velocity--
+        this.velocity--
 
+        // horses.map(vel => vel.velocity -= 200)
+        // horses[3].velocity = 200
 
-        // console.log(this.velocity.toFixed(1))
     }
     go(){
         let r1 = Math.random()*300|0
         let r2 = Math.random()*300|0
-        this.velocity = r2-r1
+        // this.velocity = r2-r1
+        this.velocity += r1
     }
 
 
@@ -140,10 +269,10 @@ class Horse{
         // if(n == 36  ){ let r = (Math.random()*10)|0 ; audio_horse[r].play(); }
         // if(n == 58  ){ let r = (Math.random()*10)|0 ; audio_horse[r].play(); }
 
-        // if(this.frame%5  == 0 ){ let r = (Math.random()*10)|0 ; audio_horse[r].play();}
-        // if(this.frame%10 == 0 ){ let r = (Math.random()*10)|0 ; audio_horse[r].play();}
-        // if(this.frame%15 == 0  ){ let r = (Math.random()*10)|0 ; audio_horse[r].play(); }
-        // if(this.frame%20 == 0  ){ let r = (Math.random()*10)|0 ; audio_horse[r].play(); }
+        if(this.frame%5  == 0 ){ let r = (Math.random()*10)|0 ; audio_horse[r].play();}
+        if(this.frame%10 == 0 ){ let r = (Math.random()*10)|0 ; audio_horse[r].play();}
+        if(this.frame%15 == 0  ){ let r = (Math.random()*10)|0 ; audio_horse[r].play(); }
+        if(this.frame%20 == 0  ){ let r = (Math.random()*10)|0 ; audio_horse[r].play(); }
     }
     
     bottom(n){ this.y = Screen.height - this.height - n }
@@ -218,6 +347,7 @@ class Cenario{
         this.height = n
         this.width = this.ww*k
     }
+ 
     setWidth(n){
         const k = n/this.ww
         this.width = n
@@ -228,6 +358,55 @@ class Cenario{
         this.height *= n
     }
 }
+
+// const font = new Font()
+const font = new Font()
+// font.img_url = "./fonts/fonts/title-font-shmup.png"
+// font.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+// font.cols = 10
+// font.lins = 4
+font.text('BRASIL')
+
+const messages = [
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font(),
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
+]
+
+
+
+// const font2 = new Font({
+//     img_url:'./fonts/fonts/title-font-shmup.png',
+//     cols:10,
+//     lins:4,
+// })
+
+// const font2 = new Font({img_url:"./fonts/fonts/title-font-shmup.png", cols:10, lins:4})
+// font2.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+// font2.y = 100
+// font2.x = 0
+// font2.textLine('BRASIL')
+
+
+
+// const font2 = new Font('./fonts/fonts/font-40x40-fps.png', 15)
+
+// const font3 = new Font('./fonts/fonts/title-font-shmup.png', 10)
+// font3.alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+
 
 const horses = [
     new Horse(Images.horse_black),
@@ -244,6 +423,9 @@ horses.map((e,i)=>{
     e.velocity = r
     e.bottomP(38 - i*5.5)
     e.frame = i*23
+    // e.style.translate = '500px'
+    // console.log(e.img.style.translate =(i*500)+"px")
+    e.left(100+i*34)
 })
 
 const Mechanic = {
@@ -255,12 +437,8 @@ const Mechanic = {
     }
 }
 
-//AVANÇAR CAVALOS
-// horses.map((e,i)=>{
-//     let r = Math.random()*100|0
-//     e.velocity = r
-// })
 
+const arrow_down = new Cenario('arrow_down')
 
 const background = new Cenario('background')
 background.setWidth(Screen.width)
@@ -276,14 +454,33 @@ const finishLine = new Cenario('finishLine')
 finishLine.setHeight(Screen.height/1.5)
 finishLine.bottomP(12.2)
 finishLine.right(20)
-finishLine.x = Screen.width * 5 
-finishLine.speed=10
+finishLine.x = 2*1500+235
+finishLine.speed=5
 finishLine.repeat = false
 
+
 const grandStands = [
-    new Cenario('grandstand', 2),
-    new Cenario('grandstand', 2),
+    new Sprites(Images.grandstand, 10, 30),
+    new Sprites(Images.grandstand, 10, 30),
 ]
+grandStands.map((e,i)=>{
+    e.speed=4
+    e.left(i*e.width*0.9)
+    e.bottomP(55)
+    // e.setWidth(e.height/2)
+})
+
+
+// const grandStand = new Cenario('grandstand',2)
+// grandStands.speed = 5
+// grandStands.bottomP(50)
+// grandStands.map((e,i)=>{
+//     e.speed=4
+//     e.left(i*e.width*2)
+//     e.bottomP(60)
+//     // e.setWidth(e.height/2)
+// })
+
 const trees = [
     new Cenario('tree_1'),
     new Cenario('tree_2'),
@@ -320,14 +517,14 @@ const hills = [
     new Cenario('hill', 2),
 ]
 const linesTop = [
-    new Cenario('line'),
-    new Cenario('line'),
-    new Cenario('line'),
+    new Cenario('line', 10),
+    new Cenario('line', 10),
+    new Cenario('line', 10),
 ]
 const linesBottom = [
-    new Cenario('line'),
-    new Cenario('line'),
-    new Cenario('line'),
+    new Cenario('line', 10),
+    new Cenario('line', 10),
+    new Cenario('line', 10),
 ]
 const mountains = [
     new Cenario('mountain'),
@@ -340,9 +537,7 @@ const cities = [
 
 
 cloud.topP(0)
-// cloud.setHeight(100)
-// cloud.left(2*i*e.width)
-// cloud.speed = 1.5
+
 
 hills.map((e,i)=>{
     // e.topP(30)
@@ -351,14 +546,7 @@ hills.map((e,i)=>{
     e.left(2*i*e.width)
     e.speed = 1.5
 })
-grandStands.map((e,i)=>{
-    e.y = Screen.height/2 - (e.height/1.6)
-    e.setHeight(200)
-    // e.left(i * e.width * 2)
-    // e.left(i * e.width)
-    e.left(i*Screen.width)
-    e.speed = 3
-})
+
 fencesTop.map((e,i)=>{
     e.scale(.45)
     
@@ -400,7 +588,7 @@ linesBottom.map((e,i)=>{
 trees.map((e,i)=>{
     e.setHeight(200)
     e.left(i*300)
-    e.speed = 2.5
+    e.speed = 3.5
     e.bottomP(55)
 })
 mountains.map((e,i)=>{
@@ -422,45 +610,111 @@ cities.map((e,i)=>{
     e.bottomP(60)
 })
 
+const lines = [
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+]
+
+lines.map((e,i)=>{
+    e.height = Screen.height/3
+    e.width = Screen.height/3
+    e.bottomP(12)
+    e.left(150+i*1500)
+    e.speed = 5
+    e.repeat = false
+})
+
+
+function horseWinner(){
+    const s = []
+    horses.map((e,i)=>s.push(e.x))
+    const zz = Math.max(...s)
+    // horses.find((e,i)=>e.x==m).x = 0
+    return horses.find((e,i)=>e.x==zz)
+}
+
 const velocidade = 1
+let m = 0
+
 function loop(){
     
     ctx.beginPath();
     ctx.fillStyle = "white"; 
     ctx.fillRect(0, 0, Screen.width, Screen.height);
-    background.draw()
     
     
-    mountains.map((e,i)=>{ e.draw() })
 
-    // cloud.draw(); cloud.refresh()
     
+
+    background.draw()
+    mountains.map((e,i)=>{ e.draw() })
     grasses.map(e=>{ e.draw() ;e.refresh() ;})
     cities.map(e=>{ e.draw(); e.refresh() })
     hills.map(e=>{ e.draw(); e.refresh(); })
     trees.map(e=>{ e.draw(); e.refresh() })
-    grandStands.map(e=>{ e.draw(); e.refresh() })
+    grandStands.map(e=>{ e.draw(); e.walk() })
     plantsTop.map(e=>{ e.draw(); e.refresh() })
     fencesTop.map(e=>{ e.draw(); e.refresh() })
     linesTop.map(e=>{ e.draw(); e.refresh() })
     linesBottom.map(e=>{ e.draw(); e.refresh() })
+    lines.map(e=>{ e.draw(); e.refresh() })
     
-    horses.map(e=>{ e.draw(); e.refresh() })
-    // horses.map(e=>{ e.draw();})
+    
+    lines.map((e,i)=>{
+        messages[i].text((i*100).toString()+'m')
+        messages[i].x = e.x-40
+        messages[i].y = e.y-20
+    })
+
+    ctx.beginPath();
+    ctx.moveTo(horseWinner().x+185, horses[0].y+80);
+    ctx.lineTo(horseWinner().x+185, horses[5].y+120);
+    ctx.strokeStyle = 'yellow';
+    ctx.lineWidth = 3
+    ctx.stroke(); 
+
+    horses.map(e=>{ 
+        e.draw(); 
+        e.refresh();
+    })
+
+    
+    
+    
     finishLine.draw()
     finishLine.refresh()
+    
     fencesBottom.map(e=>{ e.draw(); e.refresh() })
     plantsBottom.map(e=>{ e.draw(); e.refresh() })
     
+    arrow_down.x = horseWinner().x+horseWinner().width/2
+    arrow_down.y = horseWinner().y
+
+    arrow_down.draw()
+    arrow_down.refresh()
     
+
+    messages[10].text(`LAP: ${m}/10`)
     
+    m = lines.map(e=>e.x < horseWinner().x).filter(e=>e).length
+
     requestAnimationFrame(loop)
 }
 
 window.addEventListener('DOMContentLoaded',()=>{
-    setTimeout(()=>{
-        loop()
-    }, 2000)
+    // setTimeout(()=>{
+        // loop()
+        
+    // }, 2000)
+    loading()
 })
 
 // setTimeout(()=>{
@@ -468,3 +722,18 @@ window.addEventListener('DOMContentLoaded',()=>{
 // }, 2000)
 // loop()
     
+function loading(){
+    qt = Object.keys(Images).length
+    qt2 = 0
+
+    Object.keys(Images).map(e=>{
+        img = new Image()
+        img.src = Images[e]
+        img.onload=()=>{ 
+            qt2++ 
+            if(qt2/qt == 1){
+                loop()
+            }
+        }
+    })
+}
