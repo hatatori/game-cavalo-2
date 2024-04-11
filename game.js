@@ -1,4 +1,4 @@
-var c = document.getElementById("gameScreenCanvas");
+var c = document.getElementById("canvas");
 var ctx = c.getContext("2d");
 
 const Screen = {
@@ -30,13 +30,13 @@ const Images = {
     fence: './art/fence.png',
     line: './art/line.png',
     line_d: './art/line_d.png',
-    grandstand: './art/grandstand.png',
+    grandstand: './art/grandstand_1.png',
     finishLine: './art/finishLine.png',
     city: './art/city.png',
     cloud: './art/cloud.png',
     arrow_down: './art/arrow_down.png',
+    win: './art/win.png',
 }
-
 const audio_horse = [
     new Audio('./som/c1.mp3'),
     new Audio('./som/c2.mp3'),
@@ -50,116 +50,116 @@ const audio_horse = [
     new Audio('./som/c10.mp3')
 ]
 
-class Sprites{
+// class Sprites{
 
-    pic = {
-        w: 5230/10,
-        h: 3870/10,
-        x: 0,
-        y: 0,
-        frame:0,
-        framespeed: 1,
-    }
+//     pic = {
+//         w: 5230/10,
+//         h: 3870/10,
+//         x: 0,
+//         y: 0,
+//         frame:0,
+//         framespeed: 5,
+//     }
     
-    picLoaded = {
-        w: 5230,
-        h: 3870,
-        l: 10,
-        c: 10,
-        frameLimit: 120
-    }
+//     picLoaded = {
+//         w: 5230,
+//         h: 3870,
+//         l: 10,
+//         c: 10,
+//         frameLimit: 120
+//     }
 
-    width=100;
-    height=100;
-    x=0;
-    y=0;
-    speed=1
+//     width=100;
+//     height=100;
+//     x=0;
+//     y=0;
+//     speed=1
      
-    constructor(img_url, cols, lins){
+//     constructor(img_url, cols, lins){
 
-        this.sprite = new Image()
-        this.sprite.src = img_url
-        this.picLoaded.frameLimit = cols*lins
+//         this.sprite = new Image()
+//         this.sprite.src = img_url
+//         this.picLoaded.frameLimit = cols*lins
 
-        this.picLoaded.c = cols
-        this.picLoaded.l = lins
+//         this.picLoaded.c = cols
+//         this.picLoaded.l = lins
 
-        const w = this.sprite.width
-        const h = this.sprite.height
+//         const w = this.sprite.width
+//         const h = this.sprite.height
 
-        // this.pic.w = w/cols
-        // this.pic.h = h/lins
+//         // this.pic.w = w/cols
+//         // this.pic.h = h/lins
 
-        this.w = w/cols
-        this.h = h/lins
+//         this.w = w/cols
+//         this.h = h/lins
 
-        this.width = w/cols
-        this.height = h/lins
+//         this.width = w/cols
+//         this.height = h/lins
 
-        this.sprite.onload=()=>{
-            this.picLoaded.w = w
-            this.picLoaded.h = h
-        }
-    }
+//         this.sprite.onload=()=>{
+//             this.picLoaded.w = w
+//             this.picLoaded.h = h
+//         }
+//     }
 
-    draw(){
+//     draw(){
         
-        // ctx.beginPath(); 
-        // ctx.fillStyle = 'white'
-        // ctx.rect(0, 0, 1920, 1080);
-        // ctx.fill();
+//         // ctx.beginPath(); 
+//         // ctx.fillStyle = 'white'
+//         // ctx.rect(0, 0, 1920, 1080);
+//         // ctx.fill();
 
-        this.pic.frame = this.pic.frame%this.picLoaded.frameLimit
+//         this.pic.frame = this.pic.frame%this.picLoaded.frameLimit
         
-        const c = (this.pic.frame % this.picLoaded.c) * this.w
-        const l = (this.pic.frame / this.picLoaded.c|0) * this.h
+//         const c = (this.pic.frame % this.picLoaded.c) * this.w
+//         const l = (this.pic.frame / this.picLoaded.c|0) * this.h
 
-        ctx.drawImage(
-            this.sprite,
-            c, l,
-            this.w, this.h,
-            this.x, this.y,
-            this.width, this.height, //tamanho final da imagem
-        );
+//         ctx.drawImage(
+//             this.sprite,
+//             c, l,
+//             this.w, this.h,
+//             this.x, this.y,
+//             this.width, this.height, //tamanho final da imagem
+//         );
 
-    }
+//     }
     
-    refresh(){
-        this.pic.frame++
-    }
+//     refresh(){
+//         this.pic.frame++
+//     }
 
-    walk(){
-        this.pic.frame+=this.pic.framespeed
-        this.x-=this.speed
+//     walk(){
+//         this.pic.frame+=this.pic.framespeed
+//         this.x-=this.speed
         
-        // if(this.x > -this.width){
-        //     this.x = Screen.width
-        // }
-        if(-this.x > this.width) this.x = Screen.width;
-    }
+//         // if(this.x > -this.width){
+//         //     this.x = Screen.width
+//         // }
+//         if(-this.x > this.width) this.x = Screen.width;
+//     }
 
     
-    bottom(n){ this.y = Screen.height - this.height - n }
-    bottomP(n){ this.y = Screen.height - this.height - Screen.height * (n/100) }
-    top(n){ this.y = n }
-    topP(n){ this.y = Screen.height * n/100 }
-    right(n){ this.x = Screen.width - this.width - n }
-    left(n){ this.x = n }
-    leftP(n){ this.x = Screen.width - this.width - Screen.width * (n/100) }
+//     bottom(n){ this.y = Screen.height - this.height - n }
+//     bottomP(n){ this.y = Screen.height - this.height - Screen.height * (n/100) }
+//     top(n){ this.y = n }
+//     topP(n){ this.y = Screen.height * n/100 }
+//     right(n){ this.x = Screen.width - this.width - n }
+//     left(n){ this.x = n }
+//     leftP(n){ this.x = Screen.width - this.width - Screen.width * (n/100) }
 
-    setWidth(n){
-        const k = n/this.h
-        this.height = n
-        this.width = this.w*k
-    }
-    setHeight(n){
-        const k = n/this.w
-        this.width = n
-        this.height = this.h*k
-    }
+//     setWidth(n){
+//         const k = n/this.h
+//         this.height = n
+//         this.width = this.w*k
+//     }
+//     setHeight(n){
+//         const k = n/this.w
+//         this.width = n
+//         this.height = this.h*k
+//     }
     
 
-}
+// }
 
 
 class Horse{
@@ -170,11 +170,17 @@ class Horse{
     width = 227
     height = 128
     num=0
-    constructor(img_url){
+    tx=0
+    frameSpeed = 5
+    alpha = 1
+
+    constructor(img_url, num){
+        this.num = num
         this.img = new Image()
         this.img.src = img_url
     }
     
+
     draw(){
         this.frame = this.frame%120
         
@@ -187,22 +193,34 @@ class Horse{
         this.width = widthPicture/10
         this.height = heightPicture/12
         
+        ctx.globalAlpha = this.alpha;
+
         ctx.drawImage(this.img, 
             this.width * linha, this.height*coluna, 
             this.width, this.height, 
-            this.x, this.y, 
+            this.tx+this.x, this.y, 
             this.width, this.height,
         )
+        ctx.globalAlpha = 1;
+
     }
 
     refresh(){
         
-        this.frame += 5
+        this.frame += this.frameSpeed
         
-        this.x += this.velocity/100
+        this.x += this.velocity/90
         
         if(this.velocity > 0) this.velocity = this.velocity - 0.5;
         if(this.velocity < 0) this.velocity = this.velocity + 0.5;
+
+        if(this.velocity > 65*1){ this.frameSpeed = 5 }
+        if(this.velocity > 65*2){ this.frameSpeed = 6 }
+        if(this.velocity > 65*3){ this.frameSpeed = 7 }
+        // if(this.velocity > 65*2){ this.frameSpeed = 5 }
+        // if(this.velocity > 65*4){ this.frameSpeed = 8 }
+
+        // if(this.velocity > 100){ this.frameSpeed = 10 }
 
         // limite
         // if(this.x >= Screen.width-this.width){
@@ -230,34 +248,42 @@ class Horse{
         //     this.x = Screen.width-this.width
         // }
 
+        // parte 2
         if(this.x >= Screen.width-this.width){
-            // const rand = Math.random() * 200
             this.velocity *= 0.9
-            // this.x = Screen.width-this.width
         }
 
-        this.sound(this.num)
+        if(this.velocity.toFixed(0) == 0){
+            this.go()
+        }
+
+        // this.sound(this.num)
 
         // if(this.velocity.toFixed(1)==0 && this.x < Screen.width/3) {
         //     this.go()
         // }
 
 
-        if(this.velocity.toFixed(1)<=0 && this.x < Screen.width/5) {
+        if( this.x + this.tx - this.width > Screen.width - this.width*2){
+            this.velocity *= 0.90
+        }
+
+        if(this.velocity.toFixed(1)<=0 && this.x+this.tx < Screen.width/20 - 120) {
             this.go()
         }
 
-
-        // this.velocity--
-        this.velocity--
+        this.velocity-=0.3
+        // this.x -= 0.8
+        this.x *= 0.992
+        
 
         // horses.map(vel => vel.velocity -= 200)
         // horses[3].velocity = 200
 
     }
     go(){
-        let r1 = Math.random()*300|0
-        let r2 = Math.random()*300|0
+        let r1 = Math.random()*350|0
+        // let r2 = Math.random()*350|0
         // this.velocity = r2-r1
         this.velocity += r1
     }
@@ -281,6 +307,8 @@ class Horse{
     top(n){ this.y = n }
     topP(n){ this.y = Screen.height * n/100 }
     right(n){ this.x = Screen.width - this.width - n }
+
+    translateX(n){ this.tx = n }
     
     left(n){ this.x = n }
     leftP(n){ this.x = Screen.width - this.width - Screen.width * (n/100) }
@@ -378,12 +406,18 @@ const messages = [
     new Font('./fonts/fonts/pixelart.png'),
     new Font('./fonts/fonts/pixelart.png'),
     new Font('./fonts/fonts/pixelart.png'),
+    new Font('./fonts/fonts/pixelart.png'),
     new Font(),
     new Font('./fonts/fonts/pixelart.png'),
     new Font('./fonts/fonts/pixelart.png'),
     new Font('./fonts/fonts/pixelart.png'),
-    new Font('./fonts/fonts/pixelart.png'),
 ]
+
+const msg = {
+    position1: new Font(),
+    position2: new Font(),
+    position3: new Font(),
+}
 
 
 
@@ -409,13 +443,15 @@ const messages = [
 
 
 const horses = [
-    new Horse(Images.horse_black),
-    new Horse(Images.horse_red),
-    new Horse(Images.horse_blue),
-    new Horse(Images.horse_yellow),
-    new Horse(Images.horse_pink),
-    new Horse(Images.horse_green)
+    new Horse(Images.horse_black, 0),
+    new Horse(Images.horse_red, 1),
+    new Horse(Images.horse_blue, 2),
+    new Horse(Images.horse_yellow, 3),
+    new Horse(Images.horse_pink, 4),
+    new Horse(Images.horse_green, 5)
 ]
+
+
 
 horses.map((e,i)=>{
     let r = Math.random()*100|0
@@ -425,61 +461,54 @@ horses.map((e,i)=>{
     e.frame = i*23
     // e.style.translate = '500px'
     // console.log(e.img.style.translate =(i*500)+"px")
-    e.left(100+i*34)
+    e.left(-120)
+    e.translateX(40+i*34)
 })
 
 const Mechanic = {
+
+    ap: true,
+
+    c1: [],
+
+    m: [],
+
+    horsesOrder: [],
+
     horseWin(number_horse){
         horses.map(e=>{
-            e.velocity = -100
+            // e.velocity = -200
         })
         horses[number_horse].velocity = 500
-    }
+    },
+
+    alpha(a, b, c){
+        if(this.ap){
+            // this.horsesOrder = horsesOrder()
+            horses.map(horse=> horse.alpha = 0.0 )
+            horses[a].alpha = 1
+            horses[b].alpha = 0.2
+            horses[c].alpha = 0.2
+        }
+        this.ap = false        
+    },
+
+
 }
 
 
+
 const arrow_down = new Cenario('arrow_down')
-
 const background = new Cenario('background')
-background.setWidth(Screen.width)
-
-const cloud = new Cenario('cloud')
-cloud.setHeight(150)
-cloud.bottomP(0)
-cloud.right(0)
-cloud.speed = 0.1
-
-
 const finishLine = new Cenario('finishLine')
-finishLine.setHeight(Screen.height/1.5)
-finishLine.bottomP(12.2)
-finishLine.right(20)
-finishLine.x = 2*1500+235
-finishLine.speed=5
-finishLine.repeat = false
+const cloud = new Cenario('cloud')
+const win = new Cenario('win')
+
 
 
 const grandStands = [
-    new Sprites(Images.grandstand, 10, 30),
-    new Sprites(Images.grandstand, 10, 30),
+    new Cenario('grandstand', 1),
 ]
-grandStands.map((e,i)=>{
-    e.speed=4
-    e.left(i*e.width*0.9)
-    e.bottomP(55)
-    // e.setWidth(e.height/2)
-})
-
-
-// const grandStand = new Cenario('grandstand',2)
-// grandStands.speed = 5
-// grandStands.bottomP(50)
-// grandStands.map((e,i)=>{
-//     e.speed=4
-//     e.left(i*e.width*2)
-//     e.bottomP(60)
-//     // e.setWidth(e.height/2)
-// })
 
 const trees = [
     new Cenario('tree_1'),
@@ -535,9 +564,45 @@ const cities = [
     new Cenario('city', 10),
 ]
 
+const lines = [
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+    new Cenario('line_d'),
+]
+
+// positions
+
+win.left(Screen.width/2 - win.width/2)
+win.top(10)
+win.speed = 0
+
+background.setWidth(Screen.width)
 
 cloud.topP(0)
+cloud.setHeight(150)
+cloud.bottomP(0)
+cloud.right(0)
+cloud.speed = 0.1
 
+finishLine.setHeight(Screen.height/1.5)
+finishLine.bottomP(12.2)
+finishLine.right(20)
+finishLine.x = 280+10*1200
+finishLine.speed=5
+finishLine.repeat = false
+
+grandStands.map((e,i)=>{
+    e.speed=4
+    e.left(i*e.width*0.9)
+    e.bottomP(55)
+})
 
 hills.map((e,i)=>{
     // e.topP(30)
@@ -598,7 +663,7 @@ mountains.map((e,i)=>{
 })
 plantsTop.map((e,i)=>{
     e.scale(.45)
-    e.bottomP(50)
+    e.bottomP(49)
     e.left(e.width*i)
     e.speed = 5
 })
@@ -610,24 +675,14 @@ cities.map((e,i)=>{
     e.bottomP(60)
 })
 
-const lines = [
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-]
+
 
 lines.map((e,i)=>{
     e.height = Screen.height/3
     e.width = Screen.height/3
     e.bottomP(12)
-    e.left(150+i*1500)
+    // e.left(150+i*1500)
+    e.left(1400+i*1200)
     e.speed = 5
     e.repeat = false
 })
@@ -635,87 +690,334 @@ lines.map((e,i)=>{
 
 function horseWinner(){
     const s = []
-    horses.map((e,i)=>s.push(e.x))
+    horses.map((e,i)=>{
+        const ex = e.x
+        const tx = e.tx
+        return s.push(ex)
+    })
+
     const zz = Math.max(...s)
+    // console.log(zz)
     // horses.find((e,i)=>e.x==m).x = 0
     return horses.find((e,i)=>e.x==zz)
 }
 
-const velocidade = 1
-let m = 0
-
-function loop(){
+function horsesOrder(){
+    let horsesOrder_arr = []
+    // const horses2 = horses
+    let arr_x = horses.map(e=>e.x)
     
-    ctx.beginPath();
-    ctx.fillStyle = "white"; 
-    ctx.fillRect(0, 0, Screen.width, Screen.height);
-    
-    
-
-    
-
-    background.draw()
-    mountains.map((e,i)=>{ e.draw() })
-    grasses.map(e=>{ e.draw() ;e.refresh() ;})
-    cities.map(e=>{ e.draw(); e.refresh() })
-    hills.map(e=>{ e.draw(); e.refresh(); })
-    trees.map(e=>{ e.draw(); e.refresh() })
-    grandStands.map(e=>{ e.draw(); e.walk() })
-    plantsTop.map(e=>{ e.draw(); e.refresh() })
-    fencesTop.map(e=>{ e.draw(); e.refresh() })
-    linesTop.map(e=>{ e.draw(); e.refresh() })
-    linesBottom.map(e=>{ e.draw(); e.refresh() })
-    lines.map(e=>{ e.draw(); e.refresh() })
-    
-    
-    lines.map((e,i)=>{
-        messages[i].text((i*100).toString()+'m')
-        messages[i].x = e.x-40
-        messages[i].y = e.y-20
-    })
-
-    ctx.beginPath();
-    ctx.moveTo(horseWinner().x+185, horses[0].y+80);
-    ctx.lineTo(horseWinner().x+185, horses[5].y+120);
-    ctx.strokeStyle = 'yellow';
-    ctx.lineWidth = 3
-    ctx.stroke(); 
-
-    horses.map(e=>{ 
-        e.draw(); 
-        e.refresh();
-    })
-
-    
-    
-    
-    finishLine.draw()
-    finishLine.refresh()
-    
-    fencesBottom.map(e=>{ e.draw(); e.refresh() })
-    plantsBottom.map(e=>{ e.draw(); e.refresh() })
-    
-    arrow_down.x = horseWinner().x+horseWinner().width/2
-    arrow_down.y = horseWinner().y
-
-    arrow_down.draw()
-    arrow_down.refresh()
-    
-
-    messages[10].text(`LAP: ${m}/10`)
-    
-    m = lines.map(e=>e.x < horseWinner().x).filter(e=>e).length
-
-    requestAnimationFrame(loop)
+    for(let i=0;i<6;i++){
+        major_value = Math.max(...arr_x)
+        arr_x = arr_x.filter(e=>e!=major_value)
+        horsesOrder_arr.push(horses.find(e=>e.x == major_value))
+    }
+    return horsesOrder_arr
 }
 
-window.addEventListener('DOMContentLoaded',()=>{
+let laps = -1
+
+const Msgs = {
+    t: [
+        { font: new Font(), txt: '', x:0, y:0 },
+        { font: new Font(), txt: '', x:0, y:0 },
+        { font: new Font(), txt: '', x:0, y:0 },
+    ],
+    draw(){
+        this.t.forEach(el=>{
+            el.font.text(el.txt)
+            el.font.x = el.x
+            el.font.y = el.y
+        })
+    }
+}
+
+const horsesOrderFinishLine = []
+
+const DiagonalLine = {
+    visible: true,
+    x:0, 
+    y:0,
+    draw(){
+
+        // const x1 = (horseW.x+horseW.width)-horseP-150+40
+        // const y1 = Screen.height/2.75
+        
+        var length = 500;
+
+        var angle = 45
+        var x1 = this.x
+        var y1 = this.y
+
+        var x2 = x1 + length * Math.cos(angle * Math.PI / 180);
+        var y2 = y1 + length * Math.sin(angle * Math.PI / 180);
+
+        if(!this.visible){
+            x1 = -5
+            y1 = -5
+            x2 = -5
+            y2 = -5
+        }
+
+
+        ctx.beginPath();
+        ctx.moveTo(x1, Screen.height/2.75);
+        ctx.lineTo(x2, Screen.height);
+        ctx.strokeStyle = 'yellow'; // Define a cor da linha para vermelho
+        ctx.lineWidth = 3; // Define a espessura da linha para 3 pixels
+        ctx.stroke();
+    }
+}
+
+const Controls = {
+    
+    progressBarporcent: 0,
+
+    load(){
+        
+        Object.keys(Images).map(e=>{
+            const len = Object.keys(Object.keys(Images)).length
+            const img = new Image()
+            img.src = Images[e]
+            
+            img.onload=()=>{
+                this.progressBarporcent++
+                const x = this.progressBarporcent*100/len
+                this.progress(x)
+                if(this.progressBarporcent == len){
+                    ScreenActive.screen = ScreenActive.Screens.normal
+                }
+            }
+        })
+    },
+        
+    progress(n){
+
+        ctx.beginPath();
+        ctx.fillStyle = "black"; 
+        ctx.fillRect(0, 0, Screen.width, Screen.height);
+        
+        const square = {
+            width: 300,
+            height: 50, 
+            x: 0, 
+            y: 0,
+            color: '#ffffff55',
+            borderColor: "yellow",
+            
+            draw(){
+                ctx.beginPath();
+                ctx.fillStyle = this.color; 
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+                
+                ctx.strokeStyle = this.borderColor; // Border color
+                ctx.lineWidth = 2; // Border width
+                ctx.strokeRect(this.x, this.y, this.width, this.height);
+            }
+        }
+
+        const s1 = square
+        const s2 = square
+
+        s1.color = 'black'
+        s1.borderColor = 'white'
+        s1.width = 300
+        s1.height = 40
+        s1.x = Screen.width/2 - square.width/2
+        s1.y = Screen.height/2 - square.height/2
+        s1.draw()
+        
+        s2.color = 'white'
+        s2.borderColor = 'transparent'
+        s2.height = 40
+        s2.width = n/100 * 300
+        s2.x = s1.x
+        s2.y = Screen.height/2 - s2.height/2
+        s2.draw()
+    }
+    
+}
+
+Controls.load()
+
+const ScreenActive = {
+
+    Screens: {
+        loading: "loading",
+        coicehorse: "coicehorse",
+        normal: "normal",
+    },
+    
+    screen: "loading",
+
+    loading(){
+
+    },
+
+    coicehorse(){
+        ctx.beginPath();
+        ctx.fillStyle = "black"; 
+        ctx.fillRect(0, 0, Screen.width, Screen.height);
+        
+        background.draw()
+    },
+
+    normal(){
+
+        ctx.beginPath();
+        ctx.fillStyle = "black"; 
+        ctx.fillRect(0, 0, Screen.width, Screen.height);
+        
+        background.draw()
+        
+        const horseW = horseWinner()
+        const horseP = horses.indexOf(horseW)
+    
+        mountains.map((e,i)=>{ e.draw() })
+        grasses.map(e=>{ e.draw() ;e.refresh() ;})
+        
+        const x1 = (horseW.x+horseW.width)-horseP-150+40
+        const y1 = Screen.height/2.75
+    
+        // makeLine( x1, y1 )
+        // DiagonalLine
+        DiagonalLine.x = x1
+        DiagonalLine.y = y1
+        DiagonalLine.draw()
+        
+    
+        cities.map(e=>{ e.draw(); e.refresh() })
+        hills.map(e=>{ e.draw(); e.refresh(); })
+        trees.map(e=>{ e.draw(); e.refresh() })
+        grandStands.map(e=>{ e.draw(); e.refresh() })
+        plantsTop.map(e=>{ e.draw(); e.refresh() })
+        fencesTop.map(e=>{ e.draw(); e.refresh() })
+        linesTop.map(e=>{ e.draw(); e.refresh() })
+        linesBottom.map(e=>{ e.draw(); e.refresh() })
+        lines.map(e=>{ e.draw(); e.refresh() })
+        
+        lines.map((e,i)=>{
+            // if(i>0){
+                messages[i].text(((i+1)*100).toString()+'m')
+                messages[i].x = e.x-40
+                messages[i].y = e.y-20
+            // }
+        })
+    
+        horses.map(e=>{ 
+            e.draw(); 
+            e.refresh();
+        })
+        
+        finishLine.draw()
+        finishLine.refresh()
+        
+        fencesBottom.map(e=>{ e.draw(); e.refresh() })
+        plantsBottom.map(e=>{ e.draw(); e.refresh() })
+    
+        // arrow horse winner
+        if(laps < 10){
+            arrow_down.x = horseWinner().x+horseWinner().width/2+horseWinner().tx
+            arrow_down.y = horseWinner().y
+            arrow_down.draw()
+            arrow_down.refresh()
+        }
+            
+        // sum laps
+        // if(laps < 10) 
+        laps = lines.map(e=>e.x < horseWinner().x).filter(e=>e).length;
+        
+        messages[11].text(`${laps}/10`);
+
+        // win message
+        if(laps == 10){
+            win.draw()
+        }
+        // win.refresh()
+        
+        // finish 10/10
+        Msgs.draw()
+    
+        const c1 = horsesOrder()[0]
+        const c2 = horsesOrder()[1]
+        const c3 = horsesOrder()[2]
+    
+        if(horsesOrderFinishLine.length == 0 && c1.x >= finishLine.x - 300){
+            horsesOrderFinishLine.push(c1)
+            Msgs.t[0].txt = '1'
+        }
+        
+        if(horsesOrderFinishLine.length == 1 && c2.x >= finishLine.x - 300){
+            horsesOrderFinishLine.push(c2)
+            Msgs.t[1].txt = '2'
+        }
+        
+        if(horsesOrderFinishLine.length == 2 && c3.x >= finishLine.x - 300){
+            horsesOrderFinishLine.push(c3)
+            Msgs.t[2].txt = '3'
+        }
+        
+        if(horsesOrderFinishLine.length >= 1){
+            const a = horsesOrderFinishLine[0]
+            Msgs.t[0].x = a.x + a.width/2 + a.tx - 10
+            Msgs.t[0].y = a.y - 25
+        }
+    
+        if(horsesOrderFinishLine.length >= 2){
+            const b = horsesOrderFinishLine[1]
+            Msgs.t[1].x = b.x + b.width/2 + b.tx - 10
+            Msgs.t[1].y = b.y - 25
+        }
+    
+        if(horsesOrderFinishLine.length >= 3){
+            const c = horsesOrderFinishLine[2]
+            Msgs.t[2].x = c.x + c.width/2 + c.tx - 10
+            Msgs.t[2].y = c.y - 25
+        }
+    
+    
+    
+        if(horsesOrderFinishLine.length > 2){
+            const a = horsesOrderFinishLine[0]
+            const b = horsesOrderFinishLine[1]
+            const c = horsesOrderFinishLine[2]
+    
+            // Podium.t[0].x = a.x + a.width/2 + a.tx - 20
+            // Podium.t[1].x = b.x + b.width/2 + b.tx - 20
+            // Podium.t[2].x = c.x + c.width/2 + c.tx - 20
+    
+            // Podium.t[0].y = a.y - 30
+            // Podium.t[1].y = b.y - 30
+            // Podium.t[2].y = c.y - 30
+    
+            Mechanic.alpha(a.num, b.num, c.num)
+            DiagonalLine.visible = false
+        }
+    }
+}
+// 
+
+
+
+function loop(){
+    ScreenActive[ScreenActive.screen]()
+    // Controls.progress(Controls.progressBarporcent)
+    requestAnimationFrame(loop)
+    // console.log('ok')
+}
+loop()
+
+
+
+
+
+// window.addEventListener('DOMContentLoaded',()=>{
     // setTimeout(()=>{
         // loop()
         
     // }, 2000)
-    loading()
-})
+    // loading()
+// })
 
 // setTimeout(()=>{
 //     loop()
@@ -736,4 +1038,42 @@ function loading(){
             }
         }
     })
+}
+
+// finishLine.x = 1000
+
+window.onmousemove=function(e){
+    // lines.map(e=>e.x = x)
+    // const x = -e.movementX*10*2
+
+    finishLine.x += x
+
+    lines.map((e,i)=>{
+        // e.height = Screen.height/3
+        // e.width = Screen.height/3
+        // e.bottomP(12)
+        // e.left(150+i*1500)
+        // e.left(x+300+i*1500)
+        // e.speed = 5
+        // e.repeat = false
+        e.x += x
+    })
+}
+
+window.onkeyup=e=>{
+    // if(e.key == "z"){ 
+    //     Mechanic.horseWin(0) 
+    //     finishLine.speed = 30
+    //     lines.map(e=>e.speed = 30)
+    // }
+
+    if(e.key == "1"){ Mechanic.horseWin(0) }
+    if(e.key == "2"){ Mechanic.horseWin(1) }
+    if(e.key == "3"){ Mechanic.horseWin(2) }
+    if(e.key == "4"){ Mechanic.horseWin(3) }
+    if(e.key == "5"){ Mechanic.horseWin(4) }
+    if(e.key == "6"){ Mechanic.horseWin(5) }
+    if(e.key == "0"){ 
+        horses.map(e=>e.velocity=500)
+     }
 }

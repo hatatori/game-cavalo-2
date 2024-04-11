@@ -26,7 +26,7 @@ class Font{
     img_url='./fonts/fonts/font-40x40-fps.png'
     cols=15
     lins=8
-    alphabet= ` !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLNMOPQRSTUVWXYZ|º]^_'abcdefghijklmnopqrstuvwxyz`  
+    alphabet= ` !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLNMOPQRSTUVWXYZ|¿]^_'abcdefghijklmnopqrstuvwxyz<|>~º☺`  
     
     
     constructor(img_url='./fonts/fonts/font-40x40-fps.png', cols=15, lins=8){
