@@ -5,6 +5,7 @@ const Screen = {
     width: document.body.clientWidth,
     height: document.body.clientHeight
 }
+
 c.width = Screen.width
 c.height = Screen.height
 
@@ -37,19 +38,6 @@ const Images = {
     arrow_down: './art/arrow_down.png',
     win: './art/win.png',
 }
-const audio_horse = [
-    new Audio('./som/c1.mp3'),
-    new Audio('./som/c2.mp3'),
-    new Audio('./som/c3.mp3'),
-    new Audio('./som/c4.mp3'),
-    new Audio('./som/c5.mp3'),
-    new Audio('./som/c6.mp3'),
-    new Audio('./som/c7.mp3'),
-    new Audio('./som/c8.mp3'),
-    new Audio('./som/c9.mp3'),
-    new Audio('./som/c10.mp3')
-]
-
 
 class Horse{
     x = 0
@@ -308,335 +296,280 @@ const msg = {
     position3: new Font(),
 }
 
+const box = {}
 
-const horses = [
-    new Horse(Images.horse_black, 0),
-    new Horse(Images.horse_red, 1),
-    new Horse(Images.horse_blue, 2),
-    new Horse(Images.horse_yellow, 3),
-    new Horse(Images.horse_pink, 4),
-    new Horse(Images.horse_green, 5)
-]
+function preloadObjects(){
 
+    
 
+    const horses = [
+        new Horse(Images.horse_black, 0),
+        new Horse(Images.horse_red, 1),
+        new Horse(Images.horse_blue, 2),
+        new Horse(Images.horse_yellow, 3),
+        new Horse(Images.horse_pink, 4),
+        new Horse(Images.horse_green, 5)
+    ]
+    
+    const arrow_down = new Cenario('arrow_down')
+    const background = new Cenario('background')
+    const finishLine = new Cenario('finishLine')
+    const cloud = new Cenario('cloud')
+    const win = new Cenario('win')
+    
+    const grandStands = [
+        new Cenario('grandstand', 1),
+    ]
+    
+    const trees = [
+        new Cenario('tree_1'),
+        new Cenario('tree_2'),
+        new Cenario('tree_1'),
+        new Cenario('tree_3'),
+        new Cenario('tree_4'),
+    ]
+    const plantsTop = [
+        new Cenario('plant'),
+        new Cenario('plant'),
+        new Cenario('plant'),
+        new Cenario('plant'),
+    ]
+    const plantsBottom = [
+        new Cenario('plant'),
+        new Cenario('plant'),
+        new Cenario('plant'),
+        new Cenario('plant'),
+    ]
+    const fencesTop = [
+        new Cenario('fence',10),
+        new Cenario('fence',10),
+    ]
+    const fencesBottom = [
+        new Cenario('fence',10),
+        new Cenario('fence',10),
+    ]
+    const grasses = [
+        new Cenario('grass', 2),
+        new Cenario('grass', 2),
+    ]
+    const hills = [
+        new Cenario('hill', 2),
+        new Cenario('hill', 2),
+    ]
+    const linesTop = [
+        new Cenario('line', 10),
+        new Cenario('line', 10),
+        new Cenario('line', 10),
+    ]
+    const linesBottom = [
+        new Cenario('line', 10),
+        new Cenario('line', 10),
+        new Cenario('line', 10),
+    ]
+    const mountains = [
+        new Cenario('mountain'),
+        new Cenario('mountain'),
+    ]
+    const cities = [
+        new Cenario('city', 10),
+        new Cenario('city', 10),
+    ]
+    
+    const lines = [
+        new Cenario('line_d'),
+        new Cenario('line_d'),
+        new Cenario('line_d'),
+        new Cenario('line_d'),
+        new Cenario('line_d'),
+        new Cenario('line_d'),
+        new Cenario('line_d'),
+        new Cenario('line_d'),
+        new Cenario('line_d'),
+        new Cenario('line_d'),
+    ]
 
-const Mechanic = {
-
-    ap: true,
-
-    c1: [],
-
-    m: [],
-
-    horsesOrder: [],
-
-    horseWin(number_horse){
-        horses.map(e=>{
-            // e.velocity = -200
-        })
-        horses[number_horse].velocity = 500
-    },
-
-    alpha(a, b, c){
-        if(this.ap){
-            // this.horsesOrder = horsesOrder()
-            horses.map(horse=> horse.alpha = 0.0 )
-            horses[a].alpha = 1
-            horses[b].alpha = 0.2
-            horses[c].alpha = 0.2
+    const DiagonalLine = {
+        visible: true,
+        x:0, 
+        y:0,
+        draw(){
+    
+            // const x1 = (horseW.x+horseW.width)-horseP-150+40
+            // const y1 = Screen.height/2.75
+            
+            var length = 500;
+    
+            var angle = 45
+            var x1 = this.x
+            var y1 = this.y
+    
+            var x2 = x1 + length * Math.cos(angle * Math.PI / 180);
+            var y2 = y1 + length * Math.sin(angle * Math.PI / 180);
+    
+            if(!this.visible){
+                x1 = -5
+                y1 = -5
+                x2 = -5
+                y2 = -5
+            }
+    
+    
+            ctx.beginPath();
+            ctx.moveTo(x1, Screen.height/2.75);
+            ctx.lineTo(x2, Screen.height);
+            ctx.strokeStyle = 'yellow'; // Define a cor da linha para vermelho
+            ctx.lineWidth = 3; // Define a espessura da linha para 3 pixels
+            ctx.stroke();
         }
-        this.ap = false        
-    },
+    }
 
-
+    box.horses = horses
+    box.arrow_down = arrow_down
+    box.background = background
+    box.finishLine = finishLine
+    box.cloud = cloud
+    box.win = win
+    box.grandStands = grandStands
+    box.trees = trees
+    box.plantsTop = plantsTop
+    box.plantsBottom = plantsBottom
+    box.fencesTop = fencesTop
+    box.fencesBottom = fencesBottom
+    box.grasses = grasses
+    box.hills = hills
+    box.linesTop = linesTop
+    box.linesBottom = linesBottom
+    box.mountains = mountains
+    box.cities = cities
+    box.lines = lines
+    box.DiagonalLine = DiagonalLine
+    
 }
 
-const arrow_down = new Cenario('arrow_down')
-const background = new Cenario('background')
-const finishLine = new Cenario('finishLine')
-const cloud = new Cenario('cloud')
-const win = new Cenario('win')
+function adjustPositions(){
 
-
-
-const grandStands = [
-    new Cenario('grandstand', 1),
-]
-
-const trees = [
-    new Cenario('tree_1'),
-    new Cenario('tree_2'),
-    new Cenario('tree_1'),
-    new Cenario('tree_3'),
-    new Cenario('tree_4'),
-]
-const plantsTop = [
-    new Cenario('plant'),
-    new Cenario('plant'),
-    new Cenario('plant'),
-    new Cenario('plant'),
-]
-const plantsBottom = [
-    new Cenario('plant'),
-    new Cenario('plant'),
-    new Cenario('plant'),
-    new Cenario('plant'),
-]
-const fencesTop = [
-    new Cenario('fence',10),
-    new Cenario('fence',10),
-]
-const fencesBottom = [
-    new Cenario('fence',10),
-    new Cenario('fence',10),
-]
-const grasses = [
-    new Cenario('grass', 2),
-    new Cenario('grass', 2),
-]
-const hills = [
-    new Cenario('hill', 2),
-    new Cenario('hill', 2),
-]
-const linesTop = [
-    new Cenario('line', 10),
-    new Cenario('line', 10),
-    new Cenario('line', 10),
-]
-const linesBottom = [
-    new Cenario('line', 10),
-    new Cenario('line', 10),
-    new Cenario('line', 10),
-]
-const mountains = [
-    new Cenario('mountain'),
-    new Cenario('mountain'),
-]
-const cities = [
-    new Cenario('city', 10),
-    new Cenario('city', 10),
-]
-
-const lines = [
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-    new Cenario('line_d'),
-]
-
-// positions
-
-horses.map((e,i)=>{
-    let r = Math.random()*100|0
-    e.velocity = r
-    e.bottomP(38 - i*5.5)
-    e.frame = i*23
-    e.left(-120)
-    e.translateX(40+i*34)
-})
-
-win.left(Screen.width/2 - win.width/2)
-win.top(10)
-win.speed = 0
-
-background.setWidth(Screen.width)
-
-cloud.topP(0)
-cloud.setHeight(150)
-cloud.bottomP(0)
-cloud.right(0)
-cloud.speed = 0.1
-
-finishLine.setHeight(Screen.height/1.5)
-finishLine.bottomP(12.2)
-finishLine.right(20)
-finishLine.x = 280+10*1200
-finishLine.speed=5
-finishLine.repeat = false
-
-grandStands.map((e,i)=>{
-    e.speed=4
-    e.left(i*e.width*0.9)
-    e.bottomP(55)
-})
-
-hills.map((e,i)=>{
-    // e.topP(30)
-    e.topP(35)
-    e.setHeight(100)
-    e.left(2*i*e.width)
-    e.speed = 1.5
-})
-
-fencesTop.map((e,i)=>{
-    e.scale(.45)
-    
-    e.left(e.quant*e.width*i)
-    e.bottomP(47)
-    e.speed = 5
-})
-fencesBottom.map((e,i)=>{
-    e.scale(0.65)
-    
-    e.left(e.quant*e.width*i)
-    e.bottomP(1.1)
-    e.speed = 5
-})
-plantsBottom.map((e,i)=>{
-    e.scale(.45)
-    e.bottomP(-1)
-    e.left(e.width*i)
-    e.speed = 5
-})
-grasses.map((e,i)=>{
-    e.left(e.width*i)
-    e.scale(0.6)
-    e.topP(40)
-    e.speed = 5
-})
-linesTop.map((e,i)=>{
-    e.scale(0.4)
-    e.bottomP(44)
-    e.left(e.width*i)
-    e.speed = 5
-})
-linesBottom.map((e,i)=>{
-    e.scale(0.4)
-    e.bottomP(11)
-    e.left(e.width*i)
-    e.speed = 5
-})
-trees.map((e,i)=>{
-    e.setHeight(200)
-    e.left(i*300)
-    e.speed = 3.5
-    e.bottomP(55)
-})
-mountains.map((e,i)=>{
-    e.setHeight(400)
-    e.topP(0)
-    e.left(e.width*i)
-})
-plantsTop.map((e,i)=>{
-    e.scale(.45)
-    e.bottomP(49)
-    e.left(e.width*i)
-    e.speed = 5
-})
-
-cities.map((e,i)=>{
-    e.setHeight(150)
-    e.left(i*Screen.width)
-    e.speed = 0.5
-    e.bottomP(60)
-})
-
-
-
-lines.map((e,i)=>{
-    e.height = Screen.height/3
-    e.width = Screen.height/3
-    e.bottomP(12)
-    // e.left(150+i*1500)
-    e.left(1400+i*1200)
-    e.speed = 5
-    e.repeat = false
-})
-
-
-function horseWinner(){
-    const s = []
-    horses.map((e,i)=>{
-        const ex = e.x
-        const tx = e.tx
-        return s.push(ex)
+    box.horses.map((e,i)=>{
+        let r = Math.random()*100|0
+        e.velocity = r
+        e.bottomP(38 - i*5.5)
+        e.frame = i*23
+        e.left(-120)
+        e.translateX(40+i*34)
     })
 
-    const zz = Math.max(...s)
-    // console.log(zz)
-    // horses.find((e,i)=>e.x==m).x = 0
-    return horses.find((e,i)=>e.x==zz)
-}
+    box.win.left(Screen.width/2 - box.win.width/2)
+    box.win.top(10)
+    box.win.speed = 0
 
-function horsesOrder(){
-    let horsesOrder_arr = []
-    // const horses2 = horses
-    let arr_x = horses.map(e=>e.x)
-    
-    for(let i=0;i<6;i++){
-        major_value = Math.max(...arr_x)
-        arr_x = arr_x.filter(e=>e!=major_value)
-        horsesOrder_arr.push(horses.find(e=>e.x == major_value))
-    }
-    return horsesOrder_arr
-}
+    box.background.setWidth(Screen.width)
 
-let laps = -1
+    box.cloud.topP(0)
+    box.cloud.setHeight(150)
+    box.cloud.bottomP(0)
+    box.cloud.right(0)
+    box.cloud.speed = 0.1
 
-const Msgs = {
-    t: [
-        { font: new Font(), txt: '', x:0, y:0 },
-        { font: new Font(), txt: '', x:0, y:0 },
-        { font: new Font(), txt: '', x:0, y:0 },
-    ],
-    draw(){
-        this.t.forEach(el=>{
-            el.font.text(el.txt)
-            el.font.x = el.x
-            el.font.y = el.y
-        })
-    }
-}
+    box.finishLine.setHeight(Screen.height/1.5)
+    box.finishLine.bottomP(12.2)
+    box.finishLine.right(20)
+    box.finishLine.x = 280+10*1200
+    box.finishLine.speed=5
+    box.finishLine.repeat = false
 
-const horsesOrderFinishLine = []
+    box.grandStands.map((e,i)=>{
+        e.speed=4
+        e.left(i*e.width*0.9)
+        e.bottomP(55)
+    })
 
-const DiagonalLine = {
-    visible: true,
-    x:0, 
-    y:0,
-    draw(){
+    box.hills.map((e,i)=>{
+        // e.topP(30)
+        e.topP(35)
+        e.setHeight(100)
+        e.left(2*i*e.width)
+        e.speed = 1.5
+    })
 
-        // const x1 = (horseW.x+horseW.width)-horseP-150+40
-        // const y1 = Screen.height/2.75
+    box.fencesTop.map((e,i)=>{
+        e.scale(.45)
         
-        var length = 500;
+        e.left(e.quant*e.width*i)
+        e.bottomP(47)
+        e.speed = 5
+    })
+    box.fencesBottom.map((e,i)=>{
+        e.scale(0.65)
+        
+        e.left(e.quant*e.width*i)
+        e.bottomP(1.1)
+        e.speed = 5
+    })
+    box.plantsBottom.map((e,i)=>{
+        e.scale(.45)
+        e.bottomP(-1)
+        e.left(e.width*i)
+        e.speed = 5
+    })
+    box.grasses.map((e,i)=>{
+        e.left(e.width*i)
+        e.scale(0.6)
+        e.topP(40)
+        e.speed = 5
+    })
+    box.linesTop.map((e,i)=>{
+        e.scale(0.4)
+        e.bottomP(44)
+        e.left(e.width*i)
+        e.speed = 5
+    })
+    box.linesBottom.map((e,i)=>{
+        e.scale(0.4)
+        e.bottomP(11)
+        e.left(e.width*i)
+        e.speed = 5
+    })
+    box.trees.map((e,i)=>{
+        e.setHeight(200)
+        e.left(i*300)
+        e.speed = 3.5
+        e.bottomP(55)
+    })
+    box.mountains.map((e,i)=>{
+        e.setHeight(400)
+        e.topP(0)
+        e.left(e.width*i)
+    })
+    box.plantsTop.map((e,i)=>{
+        e.scale(.45)
+        e.bottomP(49)
+        e.left(e.width*i)
+        e.speed = 5
+    })
 
-        var angle = 45
-        var x1 = this.x
-        var y1 = this.y
+    box.cities.map((e,i)=>{
+        e.setHeight(150)
+        e.left(i*Screen.width)
+        e.speed = 0.5
+        e.bottomP(60)
+    })
 
-        var x2 = x1 + length * Math.cos(angle * Math.PI / 180);
-        var y2 = y1 + length * Math.sin(angle * Math.PI / 180);
+    box.lines.map((e,i)=>{
+        e.height = Screen.height/3
+        e.width = Screen.height/3
+        e.bottomP(12)
+        // e.left(150+i*1500)
+        e.left(1400+i*1200)
+        e.speed = 5
+        e.repeat = false
+    })
 
-        if(!this.visible){
-            x1 = -5
-            y1 = -5
-            x2 = -5
-            y2 = -5
-        }
-
-
-        ctx.beginPath();
-        ctx.moveTo(x1, Screen.height/2.75);
-        ctx.lineTo(x2, Screen.height);
-        ctx.strokeStyle = 'yellow'; // Define a cor da linha para vermelho
-        ctx.lineWidth = 3; // Define a espessura da linha para 3 pixels
-        ctx.stroke();
-    }
 }
 
 const Controls = {
-    
     progressBarporcent: 0,
+    laps: 0,
 
     load(){
-        
         Object.keys(Images).map(e=>{
             const len = Object.keys(Object.keys(Images)).length
             const img = new Image()
@@ -651,12 +584,11 @@ const Controls = {
                 
                 if(this.progressBarporcent == len){
                     setTimeout(()=>{
+                        preloadObjects()
+                        adjustPositions()
                         ScreenActive.screen = ScreenActive.Screens.normal
                     }, 1000)
                 }
-                console.log('\n')
-                console.log(this.progressBarporcent)
-                console.log(len)
             }
         })
     },
@@ -704,11 +636,24 @@ const Controls = {
         s2.x = s1.x
         s2.y = Screen.height/2 - s2.height/2
         s2.draw()
-    }
+    },
     
+    horsesOrder(){
+        let horsesOrder_arr = []
+        // const horses2 = horses
+        let arr_x = box.horses.map(e=>e.x)
+        
+        for(let i=0;i<6;i++){
+            major_value = Math.max(...arr_x)
+            arr_x = arr_x.filter(e=>e!=major_value)
+            horsesOrder_arr.push(box.horses.find(e=>e.x == major_value))
+        }
+        return horsesOrder_arr
+    }
 }
 
 Controls.load()
+
 
 const ScreenActive = {
 
@@ -728,152 +673,85 @@ const ScreenActive = {
         ctx.beginPath();
         ctx.fillStyle = "black"; 
         ctx.fillRect(0, 0, Screen.width, Screen.height);
-        
-        background.draw()
+        // background.draw()
     },
 
     normal(){
-
         ctx.beginPath();
         ctx.fillStyle = "black"; 
         ctx.fillRect(0, 0, Screen.width, Screen.height);
+
+        // horses placements
+        const horsePlacement1 = Controls.horsesOrder()[0] // 1º
+        const horsePlacement2 = Controls.horsesOrder()[1] // 2º
+        const horsePlacement3 = Controls.horsesOrder()[2] // 3º
+        const horsePlacement4 = Controls.horsesOrder()[3] // 4º
+        const horsePlacement5 = Controls.horsesOrder()[4] // 5º
+        const horsePlacement6 = Controls.horsesOrder()[6] // 6º
         
-        background.draw()
+        const horseP = box.horses.indexOf(horsePlacement1)
+
+        box.background.draw()
+        box.mountains.map((e,i)=>{ e.draw() })
+        box.grasses.map(e=>{ e.draw() ;e.refresh() ;})
         
-        const horseW = horseWinner()
-        const horseP = horses.indexOf(horseW)
-    
-        mountains.map((e,i)=>{ e.draw() })
-        grasses.map(e=>{ e.draw() ;e.refresh() ;})
-        
-        const x1 = (horseW.x+horseW.width)-horseP-150+40
-        const y1 = Screen.height/2.75
-    
-        // makeLine( x1, y1 )
-        // DiagonalLine
-        DiagonalLine.x = x1
-        DiagonalLine.y = y1
-        DiagonalLine.draw()
-        
-    
-        cities.map(e=>{ e.draw(); e.refresh() })
-        hills.map(e=>{ e.draw(); e.refresh(); })
-        trees.map(e=>{ e.draw(); e.refresh() })
-        grandStands.map(e=>{ e.draw(); e.refresh() })
-        plantsTop.map(e=>{ e.draw(); e.refresh() })
-        fencesTop.map(e=>{ e.draw(); e.refresh() })
-        linesTop.map(e=>{ e.draw(); e.refresh() })
-        linesBottom.map(e=>{ e.draw(); e.refresh() })
-        lines.map(e=>{ e.draw(); e.refresh() })
-        
-        lines.map((e,i)=>{
-            // if(i>0){
-                messages[i].text(((i+1)*100).toString()+'m')
-                messages[i].x = e.x-40
-                messages[i].y = e.y-20
-            // }
+        // diagonal line
+        const x = (horsePlacement1.x+horsePlacement1.width)-horseP-150+40
+        const y = Screen.height/2.75
+        box.DiagonalLine.x = x
+        box.DiagonalLine.y = y
+        box.DiagonalLine.draw()
+
+        box.cities.map(e=>{ e.draw(); e.refresh() })
+        box.hills.map(e=>{ e.draw(); e.refresh(); })
+        box.trees.map(e=>{ e.draw(); e.refresh() })
+        box.grandStands.map(e=>{ e.draw(); e.refresh() })
+        box.plantsTop.map(e=>{ e.draw(); e.refresh() })
+        box.fencesTop.map(e=>{ e.draw(); e.refresh() })
+        box.linesTop.map(e=>{ e.draw(); e.refresh() })
+        box.linesBottom.map(e=>{ e.draw(); e.refresh() })
+        box.lines.map(e=>{ e.draw(); e.refresh() })
+
+
+        box.lines.map((e,i)=>{
+            messages[i].text(((i+1)*100).toString()+'m')
+            messages[i].x = e.x-40
+            messages[i].y = e.y-20
         })
-    
-        horses.map(e=>{ 
-            e.draw(); 
-            e.refresh();
-        })
+
+        box.horses.map(e=>{ e.draw(); e.refresh(); })
         
-        finishLine.draw()
-        finishLine.refresh()
+        box.finishLine.draw()
+        box.finishLine.refresh()
+        box.fencesBottom.map(e=>{ e.draw(); e.refresh() })
+        box.plantsBottom.map(e=>{ e.draw(); e.refresh() })
+
         
-        fencesBottom.map(e=>{ e.draw(); e.refresh() })
-        plantsBottom.map(e=>{ e.draw(); e.refresh() })
-    
-        // arrow horse winner
-        if(laps < 10){
-            arrow_down.x = horseWinner().x+horseWinner().width/2+horseWinner().tx
-            arrow_down.y = horseWinner().y
-            arrow_down.draw()
-            arrow_down.refresh()
-        }
-            
-        // sum laps
-        // if(laps < 10) 
-        laps = lines.map(e=>e.x < horseWinner().x).filter(e=>e).length;
+
+        // arrow down
+        box.arrow_down.x = horsePlacement1.x+horsePlacement1.width/2+horsePlacement1.tx
+        box.arrow_down.y = horsePlacement1.y
+        box.arrow_down.draw()
+        box.arrow_down.refresh()
         
-        messages[11].text(`${laps}/10`);
+        
+        // laps
+        Controls.laps = box.lines.map(e=>e.x < horsePlacement1.x+horsePlacement1.tx).filter(e=>e).length;
+        
+        messages[11].text(`${Controls.laps}/10`);
 
         // win message
-        if(laps == 10){
-            win.draw()
-        }
-        // win.refresh()
-        
-        // finish 10/10
-        Msgs.draw()
-    
-        const c1 = horsesOrder()[0]
-        const c2 = horsesOrder()[1]
-        const c3 = horsesOrder()[2]
-    
-        if(horsesOrderFinishLine.length == 0 && c1.x >= finishLine.x - 300){
-            horsesOrderFinishLine.push(c1)
-            Msgs.t[0].txt = '1'
+        if(Controls.laps == 2){
+            box.win.draw()
         }
         
-        if(horsesOrderFinishLine.length == 1 && c2.x >= finishLine.x - 300){
-            horsesOrderFinishLine.push(c2)
-            Msgs.t[1].txt = '2'
-        }
         
-        if(horsesOrderFinishLine.length == 2 && c3.x >= finishLine.x - 300){
-            horsesOrderFinishLine.push(c3)
-            Msgs.t[2].txt = '3'
-        }
-        
-        if(horsesOrderFinishLine.length >= 1){
-            const a = horsesOrderFinishLine[0]
-            Msgs.t[0].x = a.x + a.width/2 + a.tx - 10
-            Msgs.t[0].y = a.y - 25
-        }
-    
-        if(horsesOrderFinishLine.length >= 2){
-            const b = horsesOrderFinishLine[1]
-            Msgs.t[1].x = b.x + b.width/2 + b.tx - 10
-            Msgs.t[1].y = b.y - 25
-        }
-    
-        if(horsesOrderFinishLine.length >= 3){
-            const c = horsesOrderFinishLine[2]
-            Msgs.t[2].x = c.x + c.width/2 + c.tx - 10
-            Msgs.t[2].y = c.y - 25
-        }
-    
-    
-    
-        if(horsesOrderFinishLine.length > 2){
-            const a = horsesOrderFinishLine[0]
-            const b = horsesOrderFinishLine[1]
-            const c = horsesOrderFinishLine[2]
-    
-            // Podium.t[0].x = a.x + a.width/2 + a.tx - 20
-            // Podium.t[1].x = b.x + b.width/2 + b.tx - 20
-            // Podium.t[2].x = c.x + c.width/2 + c.tx - 20
-    
-            // Podium.t[0].y = a.y - 30
-            // Podium.t[1].y = b.y - 30
-            // Podium.t[2].y = c.y - 30
-    
-            Mechanic.alpha(a.num, b.num, c.num)
-            DiagonalLine.visible = false
-        }
     }
 }
-// 
-
-
 
 function loop(){
     ScreenActive[ScreenActive.screen]()
-    // Controls.progress(Controls.progressBarporcent)
     requestAnimationFrame(loop)
-    // console.log('ok')
 }
 loop()
 
@@ -881,69 +759,16 @@ loop()
 
 
 
-// window.addEventListener('DOMContentLoaded',()=>{
-    // setTimeout(()=>{
-        // loop()
-        
-    // }, 2000)
-    // loading()
-// })
+// window.onkeyup=e=>{
+   
 
-// setTimeout(()=>{
-//     loop()
-// }, 2000)
-// loop()
-    
-function loading(){
-    qt = Object.keys(Images).length
-    qt2 = 0
-
-    Object.keys(Images).map(e=>{
-        img = new Image()
-        img.src = Images[e]
-        img.onload=()=>{ 
-            qt2++ 
-            if(qt2/qt == 1){
-                loop()
-            }
-        }
-    })
-}
-
-// finishLine.x = 1000
-
-window.onmousemove=function(e){
-    // lines.map(e=>e.x = x)
-    // const x = -e.movementX*10*2
-
-    // finishLine.x += x
-
-    // lines.map((e,i)=>{
-        // e.height = Screen.height/3
-        // e.width = Screen.height/3
-        // e.bottomP(12)
-        // e.left(150+i*1500)
-        // e.left(x+300+i*1500)
-        // e.speed = 5
-        // e.repeat = false
-        // e.x += x
-    // })
-}
-
-window.onkeyup=e=>{
-    // if(e.key == "z"){ 
-    //     Mechanic.horseWin(0) 
-    //     finishLine.speed = 30
-    //     lines.map(e=>e.speed = 30)
-    // }
-
-    if(e.key == "1"){ Mechanic.horseWin(0) }
-    if(e.key == "2"){ Mechanic.horseWin(1) }
-    if(e.key == "3"){ Mechanic.horseWin(2) }
-    if(e.key == "4"){ Mechanic.horseWin(3) }
-    if(e.key == "5"){ Mechanic.horseWin(4) }
-    if(e.key == "6"){ Mechanic.horseWin(5) }
-    if(e.key == "0"){ 
-        horses.map(e=>e.velocity=500)
-     }
-}
+//     if(e.key == "1"){ Mechanic.horseWin(0) }
+//     if(e.key == "2"){ Mechanic.horseWin(1) }
+//     if(e.key == "3"){ Mechanic.horseWin(2) }
+//     if(e.key == "4"){ Mechanic.horseWin(3) }
+//     if(e.key == "5"){ Mechanic.horseWin(4) }
+//     if(e.key == "6"){ Mechanic.horseWin(5) }
+//     if(e.key == "0"){ 
+//         horses.map(e=>e.velocity=500)
+//      }
+// }
