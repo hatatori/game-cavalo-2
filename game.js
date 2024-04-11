@@ -788,7 +788,9 @@ const Controls = {
                 this.progress(x)
                 
                 if(this.progressBarporcent == len){
-                    ScreenActive.screen = ScreenActive.Screens.normal
+                    setTimeout(()=>{
+                        ScreenActive.screen = ScreenActive.Screens.normal
+                    }, 1000)
                 }
                 console.log('\n')
                 console.log(this.progressBarporcent)
