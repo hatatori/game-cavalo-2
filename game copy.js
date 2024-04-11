@@ -908,7 +908,7 @@ function loading(){
 
 // finishLine.x = 1000
 
-window.onmousemove=function(e){
+// window.onmousemove=function(e){
     // lines.map(e=>e.x = x)
     // const x = -e.movementX*10*2
 
@@ -924,7 +924,7 @@ window.onmousemove=function(e){
         // e.repeat = false
         // e.x += x
     // })
-}
+// }
 
 window.onkeyup=e=>{
     // if(e.key == "z"){ 

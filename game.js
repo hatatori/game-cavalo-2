@@ -423,6 +423,23 @@ function preloadObjects(){
         }
     }
 
+    const horsesOrderFinishLine = []
+
+    const Msgs = {
+        t: [
+            { font: new Font(), txt: '', x:0, y:0 },
+            { font: new Font(), txt: '', x:0, y:0 },
+            { font: new Font(), txt: '', x:0, y:0 },
+        ],
+        draw(){
+            this.t.forEach(el=>{
+                el.font.text(el.txt)
+                el.font.x = el.x
+                el.font.y = el.y
+            })
+        }
+    }
+
     box.horses = horses
     box.arrow_down = arrow_down
     box.background = background
@@ -443,6 +460,8 @@ function preloadObjects(){
     box.cities = cities
     box.lines = lines
     box.DiagonalLine = DiagonalLine
+    box.horsesOrderFinishLine = horsesOrderFinishLine
+    box.Msgs = Msgs
     
 }
 
@@ -741,10 +760,92 @@ const ScreenActive = {
         messages[11].text(`${Controls.laps}/10`);
 
         // win message
-        if(Controls.laps == 2){
+        if(Controls.laps == 10){
             box.win.draw()
         }
         
+        // fim
+        const horsesLen = box.horsesOrderFinishLine.length
+
+        if(horsesLen == 0 && horsePlacement1.x >= box.finishLine.x - 300){
+            box.horsesOrderFinishLine.push(horsePlacement1)
+            box.Msgs.t[0].txt = '1'
+        }
+
+        if(horsesLen == 1 && horsePlacement2.x >= box.finishLine.x - 300){
+            box.horsesOrderFinishLine.push(horsePlacement1)
+            box.Msgs.t[1].txt = '2'
+        }
+
+        if(horsesLen == 2 && horsePlacement3.x >= box.finishLine.x - 300){
+            box.horsesOrderFinishLine.push(horsePlacement1)
+            box.Msgs.t[2].txt = '3'
+        }
+        
+        if(horsesLen >= 1){
+            const a = box.horsesOrderFinishLine[0]
+            box.Msgs.t[0].y = a.y - 25
+            box.Msgs.t[0].x = a.x + a.width/2 + a.tx - 10
+        }
+
+        if(horsesLen >= 2){
+            const b = box.horsesOrderFinishLine[1]
+            box.Msgs.t[1].y = b.y - 25
+            box.Msgs.t[1].x = b.x + b.width/2 + b.tx - 10
+        }
+
+        function m1(horse){
+            box.Msgs.t[0].x = horse.x + horse.width/2 + horse.tx
+            box.Msgs.t[0].y = horse.y - 30
+            box.Msgs.t[0].txt = '1'
+        }
+        
+
+        box.Msgs.draw()
+
+
+        // if(box.horsesOrderFinishLine.length >= 2){
+        //     const b = box.horsesOrderFinishLine[1]
+        //     box.Msgs.t[0].y = b.y - 25
+        //     box.Msgs.t[0].x = b.x + b.width/2 + b.tx - 10
+        // }
+
+        // if(box.horsesOrderFinishLine.length >= 3){
+        //     const c = box.horsesOrderFinishLine[2]
+        //     box.Msgs.t[0].y = c.y - 25
+        //     box.Msgs.t[0].x = c.x + c.width/2 + c.tx - 10
+        // }
+        
+        
+        
+        
+        // if(horsesOrderFinishLine.length == 1 && c2.x >= finishLine.x - 300){
+        //     horsesOrderFinishLine.push(c2)
+        //     Msgs.t[1].txt = '2'
+        // }
+        
+        // if(horsesOrderFinishLine.length == 2 && c3.x >= finishLine.x - 300){
+        //     horsesOrderFinishLine.push(c3)
+        //     Msgs.t[2].txt = '3'
+        // }
+        
+        // if(horsesOrderFinishLine.length >= 1){
+        //     const a = horsesOrderFinishLine[0]
+        //     Msgs.t[0].x = a.x + a.width/2 + a.tx - 10
+        //     Msgs.t[0].y = a.y - 25
+        // }
+    
+        // if(horsesOrderFinishLine.length >= 2){
+        //     const b = horsesOrderFinishLine[1]
+        //     Msgs.t[1].x = b.x + b.width/2 + b.tx - 10
+        //     Msgs.t[1].y = b.y - 25
+        // }
+    
+        // if(horsesOrderFinishLine.length >= 3){
+        //     const c = horsesOrderFinishLine[2]
+        //     Msgs.t[2].x = c.x + c.width/2 + c.tx - 10
+        //     Msgs.t[2].y = c.y - 25
+        // }
         
     }
 }
@@ -755,7 +856,23 @@ function loop(){
 }
 loop()
 
+window.onmousemove=function(e){
+    // lines.map(e=>e.x = x)
+    const x = -e.movementX*10*2
 
+    box.finishLine.x += x
+
+    box.lines.map((e,i)=>{
+        // e.height = Screen.height/3
+        // e.width = Screen.height/3
+        // e.bottomP(12)
+        // e.left(150+i*1500)
+        // e.left(x+300+i*1500)
+        // e.speed = 5
+        // e.repeat = false
+        e.x += x
+    })
+}
 
 
 
