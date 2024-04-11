@@ -295,10 +295,10 @@ class Horse{
         // if(n == 36  ){ let r = (Math.random()*10)|0 ; audio_horse[r].play(); }
         // if(n == 58  ){ let r = (Math.random()*10)|0 ; audio_horse[r].play(); }
 
-        if(this.frame%5  == 0 ){ let r = (Math.random()*10)|0 ; audio_horse[r].play();}
-        if(this.frame%10 == 0 ){ let r = (Math.random()*10)|0 ; audio_horse[r].play();}
-        if(this.frame%15 == 0  ){ let r = (Math.random()*10)|0 ; audio_horse[r].play(); }
-        if(this.frame%20 == 0  ){ let r = (Math.random()*10)|0 ; audio_horse[r].play(); }
+        // if(this.frame%5  == 0 ){ let r = (Math.random()*10)|0 ; audio_horse[r].play();}
+        // if(this.frame%10 == 0 ){ let r = (Math.random()*10)|0 ; audio_horse[r].play();}
+        // if(this.frame%15 == 0  ){ let r = (Math.random()*10)|0 ; audio_horse[r].play(); }
+        // if(this.frame%20 == 0  ){ let r = (Math.random()*10)|0 ; audio_horse[r].play(); }
     }
     
     bottom(n){ this.y = Screen.height - this.height - n }
@@ -781,12 +781,18 @@ const Controls = {
             img.src = Images[e]
             
             img.onload=()=>{
+                
                 this.progressBarporcent++
+                
                 const x = this.progressBarporcent*100/len
                 this.progress(x)
+                
                 if(this.progressBarporcent == len){
                     ScreenActive.screen = ScreenActive.Screens.normal
                 }
+                console.log('\n')
+                console.log(this.progressBarporcent)
+                console.log(len)
             }
         })
     },
@@ -1046,9 +1052,9 @@ window.onmousemove=function(e){
     // lines.map(e=>e.x = x)
     // const x = -e.movementX*10*2
 
-    finishLine.x += x
+    // finishLine.x += x
 
-    lines.map((e,i)=>{
+    // lines.map((e,i)=>{
         // e.height = Screen.height/3
         // e.width = Screen.height/3
         // e.bottomP(12)
@@ -1056,8 +1062,8 @@ window.onmousemove=function(e){
         // e.left(x+300+i*1500)
         // e.speed = 5
         // e.repeat = false
-        e.x += x
-    })
+        // e.x += x
+    // })
 }
 
 window.onkeyup=e=>{
