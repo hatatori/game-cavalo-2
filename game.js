@@ -50,117 +50,6 @@ const audio_horse = [
     new Audio('./som/c10.mp3')
 ]
 
-// class Sprites{
-
-//     pic = {
-//         w: 5230/10,
-//         h: 3870/10,
-//         x: 0,
-//         y: 0,
-//         frame:0,
-//         framespeed: 5,
-//     }
-    
-//     picLoaded = {
-//         w: 5230,
-//         h: 3870,
-//         l: 10,
-//         c: 10,
-//         frameLimit: 120
-//     }
-
-//     width=100;
-//     height=100;
-//     x=0;
-//     y=0;
-//     speed=1
-     
-//     constructor(img_url, cols, lins){
-
-//         this.sprite = new Image()
-//         this.sprite.src = img_url
-//         this.picLoaded.frameLimit = cols*lins
-
-//         this.picLoaded.c = cols
-//         this.picLoaded.l = lins
-
-//         const w = this.sprite.width
-//         const h = this.sprite.height
-
-//         // this.pic.w = w/cols
-//         // this.pic.h = h/lins
-
-//         this.w = w/cols
-//         this.h = h/lins
-
-//         this.width = w/cols
-//         this.height = h/lins
-
-//         this.sprite.onload=()=>{
-//             this.picLoaded.w = w
-//             this.picLoaded.h = h
-//         }
-//     }
-
-//     draw(){
-        
-//         // ctx.beginPath(); 
-//         // ctx.fillStyle = 'white'
-//         // ctx.rect(0, 0, 1920, 1080);
-//         // ctx.fill();
-
-//         this.pic.frame = this.pic.frame%this.picLoaded.frameLimit
-        
-//         const c = (this.pic.frame % this.picLoaded.c) * this.w
-//         const l = (this.pic.frame / this.picLoaded.c|0) * this.h
-
-//         ctx.drawImage(
-//             this.sprite,
-//             c, l,
-//             this.w, this.h,
-//             this.x, this.y,
-//             this.width, this.height, //tamanho final da imagem
-//         );
-
-//     }
-    
-//     refresh(){
-//         this.pic.frame++
-//     }
-
-//     walk(){
-//         this.pic.frame+=this.pic.framespeed
-//         this.x-=this.speed
-        
-//         // if(this.x > -this.width){
-//         //     this.x = Screen.width
-//         // }
-//         if(-this.x > this.width) this.x = Screen.width;
-//     }
-
-    
-//     bottom(n){ this.y = Screen.height - this.height - n }
-//     bottomP(n){ this.y = Screen.height - this.height - Screen.height * (n/100) }
-//     top(n){ this.y = n }
-//     topP(n){ this.y = Screen.height * n/100 }
-//     right(n){ this.x = Screen.width - this.width - n }
-//     left(n){ this.x = n }
-//     leftP(n){ this.x = Screen.width - this.width - Screen.width * (n/100) }
-
-//     setWidth(n){
-//         const k = n/this.h
-//         this.height = n
-//         this.width = this.w*k
-//     }
-//     setHeight(n){
-//         const k = n/this.w
-//         this.width = n
-//         this.height = this.h*k
-//     }
-    
-
-// }
-
 
 class Horse{
     x = 0
@@ -420,28 +309,6 @@ const msg = {
 }
 
 
-
-// const font2 = new Font({
-//     img_url:'./fonts/fonts/title-font-shmup.png',
-//     cols:10,
-//     lins:4,
-// })
-
-// const font2 = new Font({img_url:"./fonts/fonts/title-font-shmup.png", cols:10, lins:4})
-// font2.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-// font2.y = 100
-// font2.x = 0
-// font2.textLine('BRASIL')
-
-
-
-// const font2 = new Font('./fonts/fonts/font-40x40-fps.png', 15)
-
-// const font3 = new Font('./fonts/fonts/title-font-shmup.png', 10)
-// font3.alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-
-
-
 const horses = [
     new Horse(Images.horse_black, 0),
     new Horse(Images.horse_red, 1),
@@ -452,18 +319,6 @@ const horses = [
 ]
 
 
-
-horses.map((e,i)=>{
-    let r = Math.random()*100|0
-    // let r = 200
-    e.velocity = r
-    e.bottomP(38 - i*5.5)
-    e.frame = i*23
-    // e.style.translate = '500px'
-    // console.log(e.img.style.translate =(i*500)+"px")
-    e.left(-120)
-    e.translateX(40+i*34)
-})
 
 const Mechanic = {
 
@@ -495,8 +350,6 @@ const Mechanic = {
 
 
 }
-
-
 
 const arrow_down = new Cenario('arrow_down')
 const background = new Cenario('background')
@@ -578,6 +431,15 @@ const lines = [
 ]
 
 // positions
+
+horses.map((e,i)=>{
+    let r = Math.random()*100|0
+    e.velocity = r
+    e.bottomP(38 - i*5.5)
+    e.frame = i*23
+    e.left(-120)
+    e.translateX(40+i*34)
+})
 
 win.left(Screen.width/2 - win.width/2)
 win.top(10)
