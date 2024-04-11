@@ -296,11 +296,32 @@ const msg = {
     position3: new Font(),
 }
 
-const box = {}
+const box = {
+    horses: {},
+    arrow_down: {},
+    background: {},
+    finishLine: {},
+    cloud: {},
+    win: {},
+    grandStands: {},
+    trees: {},
+    plantsTop: {},
+    plantsBottom: {},
+    fencesTop: {},
+    fencesBottom: {},
+    grasses: {},
+    hills: {},
+    linesTop: {},
+    linesBottom: {},
+    mountains: {},
+    cities: {},
+    lines: {},
+    DiagonalLine: {},
+    horsesOrderFinishLine: {},
+    Msgs: {},
+}
 
 function preloadObjects(){
-
-    
 
     const horses = [
         new Horse(Images.horse_black, 0),
@@ -311,7 +332,27 @@ function preloadObjects(){
         new Horse(Images.horse_green, 5)
     ]
     
-    const arrow_down = new Cenario('arrow_down')
+    const arrow_down = {
+        x: 0,
+        y: 0,
+        arrow_down: new Cenario('arrow_down'),
+        draw(){
+
+            const horsePlacement1 = Controls.horsesOrder()[0]
+
+            this.x = horsePlacement1.x+horsePlacement1.width/2+horsePlacement1.tx
+            this.y = horsePlacement1.y
+
+            this.arrow_down.x = this.x
+            this.arrow_down.y = this.y
+            this.arrow_down.draw()
+        }
+
+        // box.arrow_down.x = horsePlacement1.x+horsePlacement1.width/2+horsePlacement1.tx
+        // box.arrow_down.y = horsePlacement1.y
+        // box.arrow_down.draw()
+    }
+    
     const background = new Cenario('background')
     const finishLine = new Cenario('finishLine')
     const cloud = new Cenario('cloud')
@@ -392,7 +433,18 @@ function preloadObjects(){
         visible: true,
         x:0, 
         y:0,
+
         draw(){
+
+            const horsePlacement1 = Controls.horsesOrder()[0]
+            const horseP = box.horses.indexOf(horsePlacement1)
+
+            const x1 = (horsePlacement1.x+horsePlacement1.width)-horseP-150+40
+            const y1 = Screen.height/2.75
+            this.x = x1
+            this.y = y1
+            // box.DiagonalLine.draw()
+
     
             // const x1 = (horseW.x+horseW.width)-horseP-150+40
             // const y1 = Screen.height/2.75
@@ -400,8 +452,8 @@ function preloadObjects(){
             var length = 500;
     
             var angle = 45
-            var x1 = this.x
-            var y1 = this.y
+            // var x1 = this.x
+            // var y1 = this.y
     
             var x2 = x1 + length * Math.cos(angle * Math.PI / 180);
             var y2 = y1 + length * Math.sin(angle * Math.PI / 180);
@@ -700,70 +752,70 @@ const ScreenActive = {
         ctx.fillStyle = "black"; 
         ctx.fillRect(0, 0, Screen.width, Screen.height);
 
-        // horses placements
-        const horsePlacement1 = Controls.horsesOrder()[0] // 1º
-        const horsePlacement2 = Controls.horsesOrder()[1] // 2º
-        const horsePlacement3 = Controls.horsesOrder()[2] // 3º
-        const horsePlacement4 = Controls.horsesOrder()[3] // 4º
-        const horsePlacement5 = Controls.horsesOrder()[4] // 5º
-        const horsePlacement6 = Controls.horsesOrder()[6] // 6º
-        
-        const horseP = box.horses.indexOf(horsePlacement1)
+        // refreshs
+        box.grasses.map(e=>{ e.refresh();})
+        box.cities.map(e=>{ e.refresh() })
+        box.hills.map(e=>{ e.refresh(); })
+        box.trees.map(e=>{ e.refresh() })
+        box.grandStands.map(e=>{ e.refresh() })
+        box.plantsTop.map(e=>{ e.refresh() })
+        box.fencesTop.map(e=>{ e.refresh() })
+        box.linesTop.map(e=>{ e.refresh() })
+        box.linesBottom.map(e=>{ e.refresh() })
+        box.lines.map(e=>{ e.refresh() })
+        box.horses.map(e=>{ e.refresh(); })
+        box.fencesBottom.map(e=>{ e.refresh(); })
+        box.plantsBottom.map(e=>{ e.refresh(); })
+        box.finishLine.refresh()
 
+        // draw
         box.background.draw()
-        box.mountains.map((e,i)=>{ e.draw() })
-        box.grasses.map(e=>{ e.draw() ;e.refresh() ;})
-        
-        // diagonal line
-        const x = (horsePlacement1.x+horsePlacement1.width)-horseP-150+40
-        const y = Screen.height/2.75
-        box.DiagonalLine.x = x
-        box.DiagonalLine.y = y
+        box.mountains.map((e,i)=>{ e.draw() ;})
+        box.grasses.map(e=>{ e.draw(); })
         box.DiagonalLine.draw()
-
-        box.cities.map(e=>{ e.draw(); e.refresh() })
-        box.hills.map(e=>{ e.draw(); e.refresh(); })
-        box.trees.map(e=>{ e.draw(); e.refresh() })
-        box.grandStands.map(e=>{ e.draw(); e.refresh() })
-        box.plantsTop.map(e=>{ e.draw(); e.refresh() })
-        box.fencesTop.map(e=>{ e.draw(); e.refresh() })
-        box.linesTop.map(e=>{ e.draw(); e.refresh() })
-        box.linesBottom.map(e=>{ e.draw(); e.refresh() })
-        box.lines.map(e=>{ e.draw(); e.refresh() })
-
-
+        box.cities.map(e=>{ e.draw(); })
+        box.hills.map(e=>{ e.draw(); })
+        box.trees.map(e=>{ e.draw(); })
+        box.grandStands.map(e=>{ e.draw(); })
+        box.plantsTop.map(e=>{ e.draw(); })
+        box.fencesTop.map(e=>{ e.draw(); })
+        box.linesTop.map(e=>{ e.draw(); })
+        box.linesBottom.map(e=>{ e.draw(); })
+        box.lines.map(e=>{ e.draw(); })
+        box.fencesBottom.map(e=>{ e.draw(); })
+        box.plantsBottom.map(e=>{ e.draw(); })
+        
+        
+        // linhas brancas do chão
         box.lines.map((e,i)=>{
             messages[i].text(((i+1)*100).toString()+'m')
             messages[i].x = e.x-40
             messages[i].y = e.y-20
         })
 
-        box.horses.map(e=>{ e.draw(); e.refresh(); })
+        // horses placements
+        const horsePlacement = Controls.horsesOrder()
+        const horsePlacement1 = horsePlacement[0] // 1º
+        const horsePlacement2 = horsePlacement[1] // 2º
+        const horsePlacement3 = horsePlacement[2] // 3º
+        const horsePlacement4 = horsePlacement[3] // 4º
+        const horsePlacement5 = horsePlacement[4] // 5º
+        const horsePlacement6 = horsePlacement[5] // 6º
+
+        const horseP = box.horses.indexOf(horsePlacement1)
         
+        box.horses.map(e=>{ e.draw(); })
         box.finishLine.draw()
-        box.finishLine.refresh()
-        box.fencesBottom.map(e=>{ e.draw(); e.refresh() })
-        box.plantsBottom.map(e=>{ e.draw(); e.refresh() })
-
-        
-
-        // arrow down
-        box.arrow_down.x = horsePlacement1.x+horsePlacement1.width/2+horsePlacement1.tx
-        box.arrow_down.y = horsePlacement1.y
         box.arrow_down.draw()
-        box.arrow_down.refresh()
-        
         
         // laps
         Controls.laps = box.lines.map(e=>e.x < horsePlacement1.x+horsePlacement1.tx).filter(e=>e).length;
-        
+                
         messages[11].text(`${Controls.laps}/10`);
 
         // win message
-        if(Controls.laps == 10){
-            box.win.draw()
-        }
-        
+        if(Controls.laps == 10){ box.win.draw() }
+
         // fim
         const horsesLen = box.horsesOrderFinishLine.length
 
@@ -773,33 +825,74 @@ const ScreenActive = {
         }
 
         if(horsesLen == 1 && horsePlacement2.x >= box.finishLine.x - 300){
-            box.horsesOrderFinishLine.push(horsePlacement1)
+            box.horsesOrderFinishLine.push(horsePlacement2)
             box.Msgs.t[1].txt = '2'
         }
 
         if(horsesLen == 2 && horsePlacement3.x >= box.finishLine.x - 300){
-            box.horsesOrderFinishLine.push(horsePlacement1)
+            box.horsesOrderFinishLine.push(horsePlacement3)
             box.Msgs.t[2].txt = '3'
         }
-        
-        if(horsesLen >= 1){
+
+
+        if( box.horsesOrderFinishLine[0] ){
             const a = box.horsesOrderFinishLine[0]
-            box.Msgs.t[0].y = a.y - 25
-            box.Msgs.t[0].x = a.x + a.width/2 + a.tx - 10
-        }
-
-        if(horsesLen >= 2){
-            const b = box.horsesOrderFinishLine[1]
-            box.Msgs.t[1].y = b.y - 25
-            box.Msgs.t[1].x = b.x + b.width/2 + b.tx - 10
-        }
-
-        function m1(horse){
-            box.Msgs.t[0].x = horse.x + horse.width/2 + horse.tx
-            box.Msgs.t[0].y = horse.y - 30
             box.Msgs.t[0].txt = '1'
+            box.Msgs.t[0].x = a.x + a.width/2 + a.tx - 10
+            box.Msgs.t[0].y = a.y - 50
         }
+
+        if( box.horsesOrderFinishLine[1] ){
+            const a = box.horsesOrderFinishLine[1]
+            box.Msgs.t[1].txt = '2'
+            box.Msgs.t[1].x = a.x + a.width/2 + a.tx - 10
+            box.Msgs.t[1].y = a.y - 50
+        }
+
+        if( box.horsesOrderFinishLine[2] ){
+            const a = box.horsesOrderFinishLine[2]
+            box.Msgs.t[2].txt = '3'
+            box.Msgs.t[2].x = a.x + a.width/2 + a.tx - 10
+            box.Msgs.t[2].y = a.y - 50
+            
+            box.horses.map(e=>e.alpha = 0.1)
+
+            box.horsesOrderFinishLine[0].alpha = 1
+            box.horsesOrderFinishLine[1].alpha = 0.5
+            box.horsesOrderFinishLine[2].alpha = 0.5
+        }
+
+
+        box.Msgs.draw()
+        /*
+
+        // diagonal line
         
+        box.finishLine.draw()
+        box.finishLine.refresh()
+        box.fencesBottom.map(e=>{ e.draw(); e.refresh() })
+        box.plantsBottom.map(e=>{ e.draw(); e.refresh() })
+
+        
+
+        box.horses.map(e=>{ e.draw() })
+        
+        
+        
+        
+        
+        
+
+        
+
+        if( box.horsesOrderFinishLine[1] ){
+            const b = box.horsesOrderFinishLine[1]
+            box.Msgs.t[1].x = b.x + b.width/2 + b.tx - 10
+            box.Msgs.t[1].y = b.y
+        }
+
+        box.Msgs.t[0].txt = 'vamos'
+        box.Msgs.t[1].txt = 'eita'
 
         box.Msgs.draw()
 
@@ -846,6 +939,7 @@ const ScreenActive = {
         //     Msgs.t[2].x = c.x + c.width/2 + c.tx - 10
         //     Msgs.t[2].y = c.y - 25
         // }
+        */
         
     }
 }
