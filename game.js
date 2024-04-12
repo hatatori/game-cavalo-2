@@ -94,6 +94,7 @@ class Horse{
         if(this.velocity > 65*1){ this.frameSpeed = 5 }
         if(this.velocity > 65*2){ this.frameSpeed = 6 }
         if(this.velocity > 65*3){ this.frameSpeed = 7 }
+
         // if(this.velocity > 65*2){ this.frameSpeed = 5 }
         // if(this.velocity > 65*4){ this.frameSpeed = 8 }
 
@@ -220,7 +221,6 @@ class Cenario{
         this.height = this.img.height
     }
     draw(){
-        
         for(let i=0;i<this.quant;i++){
             ctx.drawImage(
                 this.img, 
@@ -264,13 +264,12 @@ class Cenario{
     }
 }
 
-// const font = new Font()
-const font = new Font()
-// font.img_url = "./fonts/fonts/title-font-shmup.png"
-// font.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-// font.cols = 10
-// font.lins = 4
-font.text('BRASIL')
+const finalLap = 5
+
+const MessagesGame = {
+    win: "VOCE VENCEU",
+    value: "R$ 2000"
+}
 
 const messages = [
     new Font('./fonts/fonts/pixelart.png'),
@@ -335,7 +334,9 @@ function preloadObjects(){
     const arrow_down = {
         x: 0,
         y: 0,
+        visible: true,
         arrow_down: new Cenario('arrow_down'),
+
         draw(){
 
             const horsePlacement1 = Controls.horsesOrder()[0]
@@ -345,7 +346,9 @@ function preloadObjects(){
 
             this.arrow_down.x = this.x
             this.arrow_down.y = this.y
-            this.arrow_down.draw()
+            if(this.visible){
+                this.arrow_down.draw();
+            }
         }
 
         // box.arrow_down.x = horsePlacement1.x+horsePlacement1.width/2+horsePlacement1.tx
@@ -458,20 +461,21 @@ function preloadObjects(){
             var x2 = x1 + length * Math.cos(angle * Math.PI / 180);
             var y2 = y1 + length * Math.sin(angle * Math.PI / 180);
     
-            if(!this.visible){
-                x1 = -5
-                y1 = -5
-                x2 = -5
-                y2 = -5
+            // if(!this.visible){
+            //     x1 = -5
+            //     y1 = -5
+            //     x2 = -5
+            //     y2 = -5
+            // }
+    
+            if(this.visible){
+                ctx.beginPath();
+                ctx.moveTo(x1, Screen.height/2.75);
+                ctx.lineTo(x2, Screen.height);
+                ctx.strokeStyle = 'yellow'; // Define a cor da linha para vermelho
+                ctx.lineWidth = 3; // Define a espessura da linha para 3 pixels
+                ctx.stroke();
             }
-    
-    
-            ctx.beginPath();
-            ctx.moveTo(x1, Screen.height/2.75);
-            ctx.lineTo(x2, Screen.height);
-            ctx.strokeStyle = 'yellow'; // Define a cor da linha para vermelho
-            ctx.lineWidth = 3; // Define a espessura da linha para 3 pixels
-            ctx.stroke();
         }
     }
 
@@ -479,6 +483,10 @@ function preloadObjects(){
 
     const Msgs = {
         t: [
+            { font: new Font(), txt: '', x:0, y:0 },
+            { font: new Font(), txt: '', x:0, y:0 },
+            { font: new Font(), txt: '', x:0, y:0 },
+            { font: new Font(), txt: '', x:0, y:0 },
             { font: new Font(), txt: '', x:0, y:0 },
             { font: new Font(), txt: '', x:0, y:0 },
             { font: new Font(), txt: '', x:0, y:0 },
@@ -529,7 +537,9 @@ function adjustPositions(){
     })
 
     box.win.left(Screen.width/2 - box.win.width/2)
-    box.win.top(10)
+    // box.win.top(20)
+    // box.win.top(30)
+    box.win.y = 30
     box.win.speed = 0
 
     box.background.setWidth(Screen.width)
@@ -543,7 +553,7 @@ function adjustPositions(){
     box.finishLine.setHeight(Screen.height/1.5)
     box.finishLine.bottomP(12.2)
     box.finishLine.right(20)
-    box.finishLine.x = 280+10*1200
+    box.finishLine.x = 280+finalLap*1200
     box.finishLine.speed=5
     box.finishLine.repeat = false
 
@@ -811,27 +821,24 @@ const ScreenActive = {
         // laps
         Controls.laps = box.lines.map(e=>e.x < horsePlacement1.x+horsePlacement1.tx).filter(e=>e).length;
                 
-        messages[11].text(`${Controls.laps}/10`);
+        messages[11].text(`${Controls.laps}/${finalLap}`);
 
         // win message
-        if(Controls.laps == 10){ box.win.draw() }
+        if(Controls.laps >= finalLap){ box.win.draw() }
 
         // fim
         const horsesLen = box.horsesOrderFinishLine.length
 
         if(horsesLen == 0 && horsePlacement1.x >= box.finishLine.x - 300){
             box.horsesOrderFinishLine.push(horsePlacement1)
-            box.Msgs.t[0].txt = '1'
         }
 
         if(horsesLen == 1 && horsePlacement2.x >= box.finishLine.x - 300){
             box.horsesOrderFinishLine.push(horsePlacement2)
-            box.Msgs.t[1].txt = '2'
         }
 
         if(horsesLen == 2 && horsePlacement3.x >= box.finishLine.x - 300){
             box.horsesOrderFinishLine.push(horsePlacement3)
-            box.Msgs.t[2].txt = '3'
         }
 
 
@@ -849,98 +856,57 @@ const ScreenActive = {
             box.Msgs.t[1].y = a.y - 50
         }
 
+        // ao cruzar a linha de chegada.
         if( box.horsesOrderFinishLine[2] ){
             const a = box.horsesOrderFinishLine[2]
             box.Msgs.t[2].txt = '3'
             box.Msgs.t[2].x = a.x + a.width/2 + a.tx - 10
             box.Msgs.t[2].y = a.y - 50
             
-            box.horses.map(e=>e.alpha = 0.1)
+            box.horses.map(e=>e.alpha = 0)
 
             box.horsesOrderFinishLine[0].alpha = 1
             box.horsesOrderFinishLine[1].alpha = 0.5
             box.horsesOrderFinishLine[2].alpha = 0.5
+
+            box.arrow_down.visible = false
+
+            box.Msgs.t[3].txt = MessagesGame.win
+            box.Msgs.t[3].x = Screen.width/2 - MessagesGame.win.length * 40 / 2
+            box.Msgs.t[3].y = Screen.height/4
+
+            box.Msgs.t[4].txt = MessagesGame.value
+            box.Msgs.t[4].x = Screen.width/2 - MessagesGame.value.length * 40 / 2
+            box.Msgs.t[4].y = Screen.height/4 + 50
+            
+            box.DiagonalLine.visible = false
+
+            MessagesGame.win = 'YOU WIN'
+            MessagesGame.value = 'R$ 2000'
+        }
+
+        if(Controls.laps < finalLap){
+
+            box.horses.map(e=>e.alpha = 1)
+            
+            box.Msgs.t[0].txt = ''
+            box.Msgs.t[1].txt = ''
+            box.Msgs.t[2].txt = ''
+            box.Msgs.t[3].txt = ''
+            box.Msgs.t[4].txt = ''
+
+            if(box.horsesOrderFinishLine[2]){
+                box.horsesOrderFinishLine.pop()
+                box.horsesOrderFinishLine.pop()
+                box.horsesOrderFinishLine.pop()
+            }
+
+            box.DiagonalLine.visible = true
         }
 
 
         box.Msgs.draw()
-        /*
-
-        // diagonal line
-        
-        box.finishLine.draw()
-        box.finishLine.refresh()
-        box.fencesBottom.map(e=>{ e.draw(); e.refresh() })
-        box.plantsBottom.map(e=>{ e.draw(); e.refresh() })
-
-        
-
-        box.horses.map(e=>{ e.draw() })
-        
-        
-        
-        
-        
-        
-
-        
-
-        if( box.horsesOrderFinishLine[1] ){
-            const b = box.horsesOrderFinishLine[1]
-            box.Msgs.t[1].x = b.x + b.width/2 + b.tx - 10
-            box.Msgs.t[1].y = b.y
-        }
-
-        box.Msgs.t[0].txt = 'vamos'
-        box.Msgs.t[1].txt = 'eita'
-
-        box.Msgs.draw()
-
-
-        // if(box.horsesOrderFinishLine.length >= 2){
-        //     const b = box.horsesOrderFinishLine[1]
-        //     box.Msgs.t[0].y = b.y - 25
-        //     box.Msgs.t[0].x = b.x + b.width/2 + b.tx - 10
-        // }
-
-        // if(box.horsesOrderFinishLine.length >= 3){
-        //     const c = box.horsesOrderFinishLine[2]
-        //     box.Msgs.t[0].y = c.y - 25
-        //     box.Msgs.t[0].x = c.x + c.width/2 + c.tx - 10
-        // }
-        
-        
-        
-        
-        // if(horsesOrderFinishLine.length == 1 && c2.x >= finishLine.x - 300){
-        //     horsesOrderFinishLine.push(c2)
-        //     Msgs.t[1].txt = '2'
-        // }
-        
-        // if(horsesOrderFinishLine.length == 2 && c3.x >= finishLine.x - 300){
-        //     horsesOrderFinishLine.push(c3)
-        //     Msgs.t[2].txt = '3'
-        // }
-        
-        // if(horsesOrderFinishLine.length >= 1){
-        //     const a = horsesOrderFinishLine[0]
-        //     Msgs.t[0].x = a.x + a.width/2 + a.tx - 10
-        //     Msgs.t[0].y = a.y - 25
-        // }
-    
-        // if(horsesOrderFinishLine.length >= 2){
-        //     const b = horsesOrderFinishLine[1]
-        //     Msgs.t[1].x = b.x + b.width/2 + b.tx - 10
-        //     Msgs.t[1].y = b.y - 25
-        // }
-    
-        // if(horsesOrderFinishLine.length >= 3){
-        //     const c = horsesOrderFinishLine[2]
-        //     Msgs.t[2].x = c.x + c.width/2 + c.tx - 10
-        //     Msgs.t[2].y = c.y - 25
-        // }
-        */
-        
+  
     }
 }
 
