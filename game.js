@@ -494,8 +494,8 @@ function preloadObjects(){
         draw(){
             this.t.forEach(el=>{
                 el.font.text(el.txt)
-                el.font.x = el.x
-                el.font.y = el.y
+                el.font.x = el.x|0
+                el.font.y = el.y|0
             })
         }
     }
