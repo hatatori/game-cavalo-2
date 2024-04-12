@@ -127,6 +127,7 @@ class Horse{
         // }
 
         // parte 2
+        
         if(this.x >= Screen.width-this.width){
             this.velocity *= 0.9
         }
@@ -137,22 +138,33 @@ class Horse{
 
         // this.sound(this.num)
 
-        // if(this.velocity.toFixed(1)==0 && this.x < Screen.width/3) {
+
+
+        // if( this.x + this.tx - this.width > Screen.width - this.width*2){
+        //     this.velocity *= 0.90
+        // }
+
+        // if(this.velocity.toFixed(1)<=0 && this.x+this.tx < Screen.width/20 - 120) {
         //     this.go()
         // }
 
-
-        if( this.x + this.tx - this.width > Screen.width - this.width*2){
-            this.velocity *= 0.90
+        if(this.x > Screen.width-this.width-this.tx+50){
+            // this.go()
+            this.x = Screen.width-this.width-this.tx+50
         }
 
-        if(this.velocity.toFixed(1)<=0 && this.x+this.tx < Screen.width/20 - 120) {
+        // ok abaixo
+        if(this.x < -this.tx-this.width/2){
             this.go()
         }
+        
+        // this.x = -this.tx - this.width/2
 
-        this.velocity-=0.3
-        // this.x -= 0.8
-        this.x *= 0.992
+        // console.log(this.x)
+
+        // this.velocity-=0.3
+
+        this.x -= 1
         
 
         // horses.map(vel => vel.velocity -= 200)
