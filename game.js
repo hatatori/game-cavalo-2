@@ -9,6 +9,8 @@ const Screen = {
 c.width = Screen.width
 c.height = Screen.height
 
+const finalLap = 10
+
 const Images = {
     horse_black: './imgs/horse_black.png',
     horse_blue: './imgs/horse_blue.png',
@@ -39,6 +41,8 @@ const Images = {
     win: './art/win.png',
 }
 
+
+
 class Horse{
     x = 0
     y = 0
@@ -50,6 +54,9 @@ class Horse{
     tx=0
     frameSpeed = 5
     alpha = 1
+    placement = 0
+    time = '0.000'
+    seed = Math.random() * 10
 
     constructor(img_url, num){
         this.num = num
@@ -72,6 +79,9 @@ class Horse{
         
         ctx.globalAlpha = this.alpha;
 
+        // ctx.fillStyle = "#00ff0055";
+        // ctx.fillRect(this.x+this.tx, this.y, this.width, this.height);
+
         ctx.drawImage(this.img, 
             this.width * linha, this.height*coluna, 
             this.width, this.height, 
@@ -85,15 +95,126 @@ class Horse{
     refresh(){
         
         this.frame += this.frameSpeed
+
+        // this.x = ran.value/10
+        // const ranvalue = parseFloat(ran.value)
+        // const ranvalueL = ran.value.at(-1)|0
+        // const ranvaluep = ranvalue/100
         
-        this.x += this.velocity/90
-        
+        this.x += this.velocity/80
+
         if(this.velocity > 0) this.velocity = this.velocity - 0.5;
         if(this.velocity < 0) this.velocity = this.velocity + 0.5;
 
-        if(this.velocity > 65*1){ this.frameSpeed = 5 }
-        if(this.velocity > 65*2){ this.frameSpeed = 6 }
-        if(this.velocity > 65*3){ this.frameSpeed = 7 }
+        // this.x = ran.value * Screen.width - this.width - this.tx + this.width - (this.width+50) * ranvaluep 
+        // this.x = ran.value * Screen.width - this.width - this.tx + this.width - (this.width+50) * this.time
+        // this.x = Screen.width - this.width - this.tx + this.width - (this.width+50) * this.time
+
+        
+
+        // box.dif = ran.value
+        box.dif = ran.value
+        this.time = parseFloat(box.dif)
+        const percent = this.time/30 * 100
+
+        // box.dif = percent
+        // this.time = percent
+        // this.x = percent - this.tx + percent * 100
+        
+        // load in time
+        this.x = (this.width-this.tx) - this.width + this.time/30 * Screen.width - (this.width * this.time/30)
+        // this.x = this.x*this.num/6
+
+        this.go1()
+        this.go2()
+        this.go3()
+
+        // this.x = ran.value/1000 * Screen.width + this.width-this.tx - this.width
+        // this.x = ran.value/100 * Screen.width - this.width/2 - this.tx
+
+        // this.x += this.velocity/
+        
+        
+        // if(this.velocity > 0) this.velocity = this.velocity - 0.5;
+        // if(this.velocity < 0) this.velocity = this.velocity + 0.5;
+
+        // if(this.velocity > 65*1){ this.frameSpeed = 5 }
+        // if(this.velocity > 65*2){ this.frameSpeed = 6 }
+        // if(this.velocity > 65*3){ this.frameSpeed = 7 }
+
+        // box.currentTime.getTime().toString().at(-1)
+        // const r = box.currentTime.getTime().toString().at(-1)
+
+        // this.time
+        // const m = 0
+        // const s = 0
+        // this.time -> 6.758
+        
+        const m = this.time.toString()
+        const s = this.time|0
+        // const ms = parseFloat(m).toFixed(3).split(".")[1]
+
+        // this.x = this.time
+        // console.log(this.time)
+        
+        // box.dif += 0.1
+        // this.time += 0.1
+        // const percent = this.time / 30
+
+
+        
+        
+
+        // this.x = percent * Screen.width - this.tx - 50
+     
+        // console.log(ms[0])
+
+        // if(this.num%2 == 0) this.velocity = 200
+
+
+        // console.log(this.time.split(".")[1][0])
+
+        // this.m2 = parseFloat(this.time).toFixed(3).split(".")[1][0]|0
+        // if(this.m2%10 == 0){
+            // const r = Math.sqrt(this.num + m + this.seed).toFixed(1).at(-1)|0
+        //     this.velocity = r * 20
+            // this.velocity = r * 20
+            
+        // }
+        // console.log(this.time)
+
+
+        // if(this.m2%3){
+            // const r = Math.sqrt(this.num + m).toFixed(1).at(-1)|0
+            // this.velocity = r * 20
+            // this.velocity = r * 20
+        // }
+
+
+        // const r = Math.sqrt( this.num + s )
+        
+        // if(this.time % 3 == 0 && this.velocity == 0){
+        //     // const r = Math.sqrt(this.num + box.currentTime.getSeconds()).toFixed(1).at(-1)|0
+        //     const r = Math.sqrt(this.num + m).toFixed(1).at(-1)|0
+        //     this.velocity = r * 20
+        // }
+
+        // if(this.m2 % 2 == 0 && this.velocity == 0){
+            // const r = Math.sqrt(this.num + box.currentTime.getSeconds()).toFixed(1).at(-1)|0
+            // this.r = Math.sqrt(this.num + this.seed + m2).toFixed(1).at(-1)|0
+            // this.r = Math.sqrt(this.num + this.seed + m2).toFixed(1).at(-1)|0
+            // this.r = Math.sin(this.num + this.seed + this.m2).toFixed(1).at(-1)|0
+            // this.r2 = Math.cos(this.num + this.seed + this.m2).toFixed(1).at(-1)|0
+            // this.r3 = Math.abs(Math.abs(this.r) - Math.abs(this.r2))
+            // this.velocity = this.r * 20
+        // }
+
+        
+
+
+        // if(box.currentTime.getSeconds() % 6 == 0){
+        //     this.go()
+        // }
 
         // if(this.velocity > 65*2){ this.frameSpeed = 5 }
         // if(this.velocity > 65*4){ this.frameSpeed = 8 }
@@ -105,10 +226,9 @@ class Horse{
         //     this.x = Screen.width-this.width
         // }
 
-        // if(this.x >= Screen.width-this.width){
-            // this.x = Screen.width-this.width
-            // this.velocity = this.velocity * 0.98
-        // }
+        
+
+        // this.velocity = this.velocity * 0.98
 
         
         // if(this.x >= Screen.width/4){
@@ -119,22 +239,41 @@ class Horse{
         //     this.go()
         // }
 
-        // limite direita
-        // if(this.x >= Screen.width-this.width){
+        // ao encostar no limite da direita
+        // if(this.x >= Screen.width-this.width - this.tx + 50){
+            // const r = Math.sqrt(this.num + m).toFixed(1).at(-1)|0
+            // this.velocity = -r*1.5
+
+            // const r = Math.sqrt(this.num + m + this.seed).toFixed(1).at(-1)|0
+            // this.velocity = -500
+            // this.y = 0
+
         //     // const rand = Math.random() * 200
         //     this.velocity = 0
         //     this.x = Screen.width-this.width
+            // this.x = Screen.width-this.width - this.tx + 50
         // }
+
+        // if(this.x == Screen.width-this.width - this.tx + 50){
+            // const r = Math.sqrt(1 + this.num + box.currentTime.getSeconds()).toFixed(1).at(-1)|0
+            // this.velocity = -this.velocity/10*r
+        // }
+
+        // if(box.currentTime.getSeconds() % 3 == 0 && this.velocity == 0){
+        //     const r = Math.sqrt(1 + this.num + box.currentTime.getSeconds()).toFixed(1).at(-1)|0
+        //     this.velocity = r * 20
+        // }
+
 
         // parte 2
         
-        if(this.x >= Screen.width-this.width){
-            this.velocity *= 0.9
-        }
+        // if(this.x >= Screen.width-this.width){
+        //     this.velocity *= 0.9
+        // }
 
-        if(this.velocity.toFixed(0) == 0){
-            this.go()
-        }
+        // if(this.velocity.toFixed(0) == 0){
+        //     this.go()
+        // }
 
         // this.sound(this.num)
 
@@ -148,34 +287,213 @@ class Horse{
         //     this.go()
         // }
 
-        if(this.x > Screen.width-this.width-this.tx+50){
+        // quando encostar na lateral direita
+        // if(this.x > Screen.width-this.width-this.tx+50){
             // this.go()
-            this.x = Screen.width-this.width-this.tx+50
-        }
+            // this.x = Screen.width-this.width-this.tx+50
+            // const r = Math.random() * 10
+            // this.velocity = r
+            // this.y = 100
+        // }
 
-        // ok abaixo
+        // diminui a velocidade quando estiver no lap decidido
+        // const midScreen = this.x-this.width/2 > Screen.width/2-this.width
+
+        // if(this.x-this.width/2 > Screen.width/2-this.width && Controls.laps >= 1){
+        // if(Controls.laps == 1){
+        // if(this.x > Screen.width/2-this.width && Controls.laps == 1 ){
+            // this.velocity = 0
+        // }
+
+        
+        // if(midScreen && Controls.laps >= 1 && this.placement == 1){
+            // this.velocity = 100
+            // this.x += 1
+        // }
+
+
+
+        //     this.y = 100
+        
+
+
+        this.limitLeft()
+        this.limitRight()
+        this.limitLeft()
+        this.limitRight()
+        this.limitLeft()
+        this.limitRight()
+        
+        // if(this.placement == 1){ 
+            // }
+            
+            this.finish()
+            
+        this.x -= 20
+
+        // if(this.placement == 1){ this.velocity += 3 }
+        // if(this.placement == 2){ this.velocity += 2 }
+        // if(this.placement == 3){ this.velocity += 1 }
+
+        
+    }
+
+    limitRight(){
+        // limite direita
+        const LimitRight = Screen.width-this.width-this.tx + 50 + 20
+        let ps2 = 0
+
+        if(this.x >= LimitRight){
+            ps2 = Math.abs(LimitRight - this.x)
+            this.x -= ps2 * 1.2
+        }
+    }
+    limitLeft(){
+        // quando encostar na lateral esquerda
+        let ps = 0
         if(this.x < -this.tx-this.width/2){
-            this.go()
+            ps = this.x + (this.width/2+this.tx)
+            ps = Math.abs(ps)
+            this.x += ps * 2
+        }
+    }
+
+    go1(){
+        const seg = 30
+        const time1 = 2
+        const t1 = time1
+        const t2 = seg-time1
+
+        if(this.time > time1){
+            this.x = 
+            this.x + (this.time-t1)/t2 * Math.sin(this.num + this.seed/10 + this.time/10) * 
+            700 + (this.time-t1)/t2 * Math.sin(this.num + this.seed/10 + this.time/10) * 500
+        }
+    }
+    
+    go2(){
+        const seg = 30
+        const time1 = 10
+        const t1 = time1
+        const t2 = seg-time1
+        // this.se
+
+        if(this.time > time1){
+            this.x = 
+            this.x + (this.time-t1)/t2 * Math.cos(this.num + this.seed/10 + this.time/10) * 
+            700 + (this.time-t1)/t2 * Math.cos(this.num + this.seed/10 + this.time/10) * 500
+        }
+    }
+    
+    go3(){
+        const seg = 30
+        const time1 = 15
+        const t1 = time1
+        const t2 = seg-time1
+        // this.se
+
+        if(this.time > time1){
+            this.x = 
+            this.x + (this.time-t1)/t2 * Math.sin(this.num + this.seed /10+ this.time/10) * 
+            700 + (this.time-t1)/t2 * Math.sin(this.num + this.seed /10+ this.time/10) * 500
+        }
+    }
+    
+    finish(){
+        const seg = 30
+        const time1 = 20
+        const t1 = time1
+        const t2 = seg-time1
+        
+
+        const LimitRight = Screen.width-this.width-this.tx + 50 + 20
+
+        if(this.time > time1 && this.placement == 0){
+            // this.x = this.x - 10 * (this.time-time1)/seg * LimitRight
+            // this.x = this.x - Math.abs(2 * (this.time-time1)/seg * LimitRight) * -1
+            this.x = this.x - 2 * (this.time-time1)/seg * LimitRight - (this.time-time1)/seg * this.width
         }
         
-        // this.x = -this.tx - this.width/2
 
-        // console.log(this.x)
-
-        // this.velocity-=0.3
-
-        this.x -= 1
         
+        if(
+            this.time > time1 && this.placement == 1 ||
+            this.time > time1 && this.placement == 2 ||
+            this.time > time1 && this.placement == 3 
+        ){
 
-        // horses.map(vel => vel.velocity -= 200)
-        // horses[3].velocity = 200
+            // const midx = Screen.width/2 - this.width - this.tx - this.num + Screen.width/3
+            // const midx = Screen.width/2 - this.width - this.tx - this.placement*5 + Screen.width/2
+            const midx = Screen.width/2 - this.width - this.tx - (this.placement/3 * 50)*5 + Screen.width/2
+
+            if(this.x < midx){
+                this.x = this.x + 3.5 * (this.time-time1)/seg * LimitRight
+
+                if(this.x > midx ){
+                    this.x = midx
+                }
+            }
+            if(this.x > midx){
+                this.x = this.x - 3.5 * (this.time-time1)/seg * LimitRight
+
+                if(this.x < midx ){
+                    this.x = midx
+                }
+            }
+        }
+        
+      
+
+
+
+        // if(this.time > time1 && this.placement == 1){
+        //     this.x = this.x + 10 * (this.time-time1)/seg * (LimitRight - 20)
+        //     if(this.x > LimitRight - 20)
+        //         this.x = LimitRight - 20
+        // }
+
+        // if(this.time > time1 && this.placement == 2){
+        //     this.x = this.x + 10 * (this.time-time1)/seg * (LimitRight - 50)
+        //     if(this.x > LimitRight - 50)
+        //         this.x = LimitRight - 50
+        // }
+
+        // if(this.time > time1 && this.placement == 3){
+        //     this.x = this.x + 10 * (this.time-time1)/seg * (LimitRight - 100)
+        //     if(this.x > LimitRight - 100)
+        //         this.x = LimitRight - 100
+        // }
+
+        // 40 
+        if(
+            this.time > seg && this.placement == 1 ||
+            this.time > seg && this.placement == 2 ||
+            this.time > seg && this.placement == 3
+        ){
+            this.x = 
+            this.x - (this.time-seg)/seg * Screen.width/4 -
+            (this.time-seg)/seg * (Screen.width/2 - this.width)
+            this.x -= 5
+        }
+
+        // if(this.x < -this.tx-this.width/2){
+            // this.x = -this.tx-this.width/2
+        // }
+        // this.limitLeft()
+        // t:his.limitLeft()
+
+        
 
     }
+    
     go(){
-        let r1 = Math.random()*350|0
+        // let r1 = Math.random()*250|0
         // let r2 = Math.random()*350|0
         // this.velocity = r2-r1
-        this.velocity += r1
+        // this.velocity += r1
+
+        this.r = Math.sin(this.num + this.seed + this.m2).toFixed(1).at(-1)|0
+        this.velocity = this.r * 50
     }
 
 
@@ -203,6 +521,12 @@ class Horse{
     left(n){ this.x = n }
     leftP(n){ this.x = Screen.width - this.width - Screen.width * (n/100) }
 }
+
+// setInterval(e=>{
+//     ran.value += 0.01
+// }, 1000/60)
+
+
 
 class Cenario{
     speed = 1 
@@ -276,7 +600,7 @@ class Cenario{
     }
 }
 
-const finalLap = 5
+
 
 const MessagesGame = {
     win: "VOCE VENCEU",
@@ -330,6 +654,10 @@ const box = {
     DiagonalLine: {},
     horsesOrderFinishLine: {},
     Msgs: {},
+    currentTime: new Date(),
+    t1: new Date(),
+    t2: new Date(),
+    dif: 0.0
 }
 
 function preloadObjects(){
@@ -540,11 +868,12 @@ function preloadObjects(){
 function adjustPositions(){
 
     box.horses.map((e,i)=>{
-        let r = Math.random()*100|0
-        e.velocity = r
+        // let r = Math.random()*100|0
+        e.velocity = 10
         e.bottomP(38 - i*5.5)
         e.frame = i*23
         e.left(-120)
+        // e.translateX(40+i*34)
         e.translateX(40+i*34)
     })
 
@@ -565,8 +894,10 @@ function adjustPositions(){
     box.finishLine.setHeight(Screen.height/1.5)
     box.finishLine.bottomP(12.2)
     box.finishLine.right(20)
+    box.finishLine.x = 100+finalLap*500
     box.finishLine.x = 280+finalLap*1200
-    box.finishLine.speed=5
+    
+    box.finishLine.speed=3 // outro
     box.finishLine.repeat = false
 
     box.grandStands.map((e,i)=>{
@@ -651,8 +982,8 @@ function adjustPositions(){
         e.width = Screen.height/3
         e.bottomP(12)
         // e.left(150+i*1500)
-        e.left(1400+i*1200)
-        e.speed = 5
+        e.left(500+i*500)
+        e.speed = 0 //aqui lap
         e.repeat = false
     })
 
@@ -661,6 +992,7 @@ function adjustPositions(){
 const Controls = {
     progressBarporcent: 0,
     laps: 0,
+    
 
     load(){
         Object.keys(Images).map(e=>{
@@ -742,6 +1074,19 @@ const Controls = {
             horsesOrder_arr.push(box.horses.find(e=>e.x == major_value))
         }
         return horsesOrder_arr
+    },
+
+    loadTime(seg){
+        // seg = 5
+        box.dif = 0
+        for(i=0;i<=seg*10;i++){
+            box.dif+=0.1
+            box.horses.map(e=>{
+                e.time = box.dif
+                // e.velocity = 0
+                e.refresh()
+            })
+        }
     }
 }
 
@@ -770,6 +1115,8 @@ const ScreenActive = {
     },
 
     normal(){
+
+
         ctx.beginPath();
         ctx.fillStyle = "black"; 
         ctx.fillRect(0, 0, Screen.width, Screen.height);
@@ -779,7 +1126,7 @@ const ScreenActive = {
         box.cities.map(e=>{ e.refresh() })
         box.hills.map(e=>{ e.refresh(); })
         box.trees.map(e=>{ e.refresh() })
-        box.grandStands.map(e=>{ e.refresh() })
+        // box.grandStands.map(e=>{ e.refresh() })
         box.plantsTop.map(e=>{ e.refresh() })
         box.fencesTop.map(e=>{ e.refresh() })
         box.linesTop.map(e=>{ e.refresh() })
@@ -798,7 +1145,7 @@ const ScreenActive = {
         box.cities.map(e=>{ e.draw(); })
         box.hills.map(e=>{ e.draw(); })
         box.trees.map(e=>{ e.draw(); })
-        box.grandStands.map(e=>{ e.draw(); })
+        // box.grandStands.map(e=>{ e.draw(); })
         box.plantsTop.map(e=>{ e.draw(); })
         box.fencesTop.map(e=>{ e.draw(); })
         box.linesTop.map(e=>{ e.draw(); })
@@ -808,12 +1155,35 @@ const ScreenActive = {
         box.plantsBottom.map(e=>{ e.draw(); })
         
         
+        // box.t2 = new Date()
+        // box.t2 = new Date(Date.now() + 20 * 1000)
+        // box.t2 = new Date(Date.now())
+        // box.dif = ((box.t2-box.t1)/1000)
+        
+        // box.dif = ran.value
+        box.horses.map(e=>e.time = box.dif)
+        
+        // box.finishLine.x = Screen.width/2
+        // box.lines.map(e=>e.x = (box.dif-30)/10 * -Screen.width)
+        
+        box.Msgs.t[5].txt = box.dif.toString()
+        box.Msgs.t[5].x = 100
+        box.Msgs.t[5].y = 100
+        
+        // box.finishLine.x = (box.dif-30)/10 * -Screen.width + Screen.width-1000
+        box.finishLine.x = 10*958 + 300*box.dif*-1
         // linhas brancas do chão
+
         box.lines.map((e,i)=>{
             messages[i].text(((i+1)*100).toString()+'m')
             messages[i].x = e.x-40
             messages[i].y = e.y-20
+
+            e.x =  500 + i * 1000 + 300*box.dif*-1
+            // e.x = (box.dif-30)/10
         })
+
+
 
         // horses placements
         const horsePlacement = Controls.horsesOrder()
@@ -825,6 +1195,10 @@ const ScreenActive = {
         const horsePlacement6 = horsePlacement[5] // 6º
 
         const horseP = box.horses.indexOf(horsePlacement1)
+
+        box.horses[3].placement = 2
+        box.horses[4].placement = 3
+        box.horses[5].placement = 1
         
         box.horses.map(e=>{ e.draw(); })
         box.finishLine.draw()
@@ -832,7 +1206,7 @@ const ScreenActive = {
         
         // laps
         Controls.laps = box.lines.map(e=>e.x < horsePlacement1.x+horsePlacement1.tx).filter(e=>e).length;
-                
+
         messages[11].text(`${Controls.laps}/${finalLap}`);
 
         // win message
@@ -859,6 +1233,7 @@ const ScreenActive = {
             box.Msgs.t[0].txt = '1'
             box.Msgs.t[0].x = a.x + a.width/2 + a.tx - 10
             box.Msgs.t[0].y = a.y - 50
+
         }
 
         if( box.horsesOrderFinishLine[1] ){
@@ -929,35 +1304,26 @@ function loop(){
 loop()
 
 window.onmousemove=function(e){
-    // lines.map(e=>e.x = x)
-    const x = -e.movementX*10*2
-
-    box.finishLine.x += x
-
-    box.lines.map((e,i)=>{
-        // e.height = Screen.height/3
-        // e.width = Screen.height/3
-        // e.bottomP(12)
-        // e.left(150+i*1500)
-        // e.left(x+300+i*1500)
-        // e.speed = 5
-        // e.repeat = false
-        e.x += x
-    })
+    // const x = -e.movementX*10*2
+    // box.finishLine.x += x
+    // box.lines.map((e,i)=>{ e.x += x })
 }
 
 
 
-// window.onkeyup=e=>{
-   
-
-//     if(e.key == "1"){ Mechanic.horseWin(0) }
-//     if(e.key == "2"){ Mechanic.horseWin(1) }
-//     if(e.key == "3"){ Mechanic.horseWin(2) }
-//     if(e.key == "4"){ Mechanic.horseWin(3) }
-//     if(e.key == "5"){ Mechanic.horseWin(4) }
-//     if(e.key == "6"){ Mechanic.horseWin(5) }
-//     if(e.key == "0"){ 
-//         horses.map(e=>e.velocity=500)
-//      }
-// }
+window.onkeyup=e=>{
+    if(e.key == "1"){ 
+        // box.horses.map(e=> e.velocity = 500)
+        // Mechanic.horseWin(0) 
+    }
+    let r = Math.random()*100
+    box.horses.map(e=>e.seed = r)
+    // if(e.key == "2"){ Mechanic.horseWin(1) }
+    // if(e.key == "3"){ Mechanic.horseWin(2) }
+    // if(e.key == "4"){ Mechanic.horseWin(3) }
+    // if(e.key == "5"){ Mechanic.horseWin(4) }
+    // if(e.key == "6"){ Mechanic.horseWin(5) }
+    // if(e.key == "0"){ 
+    //     horses.map(e=>e.velocity=500)
+    // }
+}
