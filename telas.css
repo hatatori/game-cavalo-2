@@ -1,0 +1,118 @@
+
+
+.tela{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 500px;
+    height: 500px;
+}
+
+.box{
+    position: fixed;
+    margin: auto;
+    cursor: pointer;
+    /* background-color: #FFFFFF55; */
+    /* background-color: #ffffff22; */
+}
+
+.cavalo{
+    position: fixed;
+    /* position: absolute; */
+    top: 0%;
+    left: 0%;
+    right: 0%;
+    left: 0%;
+    margin: auto;
+    width: 160px;
+    height: 100px;
+    /* background-color: #ffffff00; */
+}
+
+.cavalo_0{ right: 190px ; top: 121px; }
+.cavalo_1{ left:  210px ; top: 121px; }
+.cavalo_2{ right: 190px ; top: 221px; }
+.cavalo_3{ left:  210px ; top: 221px; }
+.cavalo_4{ right: 190px ; top: 321px; }
+.cavalo_5{ left:  210px ; top: 321px; } 
+
+/* .cavalo_0{ top: 24.2%; }
+.cavalo_1{ top: 24.2%; }
+.cavalo_2{ top: 44.2%; }
+.cavalo_3{ top: 44.2%; }
+.cavalo_4{ top: 64.2%; }
+.cavalo_5{ top: 64.2%; }  */
+
+/*  */
+
+.cavalo:hover{
+    cursor: pointer;
+    background-color: #ffffff22;
+}
+
+.modalidade_1, .modalidade_2, .modalidade_3,.btn_confirmar{
+    width: 300px;
+    height: 40px;
+    bottom: 25.3%;
+    left: 0%;
+    right: 0px;
+}
+
+.modalidade_1{ bottom: 170px; }
+.modalidade_2{ bottom: 130px; }
+.modalidade_3{ bottom: 90px; }
+
+.btn_confirmar{ 
+    bottom: 20px;
+    /* width: 150px; */
+}
+
+.box:hover{
+    /* background-color: #ffffff11; */
+    /* border: solid 2px white; */
+}
+
+/* .modalidade_2 */
+/* .modalidade_3 */
+/* .btn_confirmar */
+
+
+.aposta .btn_um,
+.aposta .btn_cinco,
+.aposta .btn_dez,
+.aposta .btn_cinquenta,
+.aposta .btn_cem,
+.aposta .btn_reset,
+.aposta .btn_cofirmar_aposta,
+.aposta .btn_quinhentos{
+    background-color: red;
+    /* background-color: #ffffff22; */
+    width: 98px;
+    height: 38px;
+    left: 0px;
+    right: 0px;
+}
+
+/* .aposta .btn_um{ left: 130px; bottom: 250px; } */
+.aposta .btn_volta{ left: 0px; top: 0px; width: 50px; height: 50px; }
+
+.aposta .btn_um{ right: 90px; bottom: 250px; }
+/* 
+.aposta .btn_cinco{ left: 130px; bottom: 250px; }
+.aposta .btn_dez{ right: 90px; bottom: 200px; }
+.aposta .btn_cinquenta{ left: 130px; bottom: 200px; }
+.aposta .btn_cem{ right: 90px; bottom: 150px; }
+.aposta .btn_quinhentos{ left: 130px; bottom: 150px; }
+.aposta .btn_reset{ left: 0px; bottom: 100px; width: 200px; } 
+*/
+.aposta .btn_cofirmar_aposta{ left: 0px; bottom: 3.1%; width: 200px; }
+
+/* .aposta .btn_um{ left: -91px; bottom: 250px; } */
+/* .aposta .btn_um{} */
+/* .aposta .btn_cinco{} */
+/* .aposta .btn_dez{} */
+/* .aposta .btn_cinquenta{} */
+/* .aposta .btn_cem{} */
+/* .aposta .btn_quinhentos{} */
+/* .aposta .btn_reset{} */
+/* .aposta .btn_cofirmar{} */

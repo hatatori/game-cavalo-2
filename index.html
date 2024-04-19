@@ -4,15 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
     <link rel="stylesheet" href="./style.css">
-    <script defer src="./fonts/fonts.js"></script>
-    <!-- <script defer src="./video/sprites.js"></script> -->
-    <script defer src="./game.js"></script>
+    <link rel="stylesheet" href="./buttons.css">
+    <link rel="stylesheet" href="./telas.css">
 
+    <script defer src="js/Setup.js"></script>
+    <script defer src="js/Controls.js"></script>
+    <script defer src="js/Clicks.js"></script>
+    <script defer src="js/ScreenActive.js"></script>
+
+    <script defer src="js/Fonts.js"></script>
+    <script defer src="js/Horse.js"></script>
+    <script defer src="js/Cenario.js"></script>
+    <script defer src="js/SpritesAnimation.js"></script>
+    <script defer src="js/Sprite.js"></script>
+
+    <script defer src="./game.js"></script>
+    
+    <!-- <script defer src="./clicks.js"></script> -->
 
 
 </head>
 <body>
+
+    
 
     <!-- <input type="range" min="0" max="2000" id="ran1">
     <input type="range" min="0" max="2000" id="ran2">
@@ -24,7 +40,14 @@
     <input type="range" min="0" max="2000" id="ran8">
     <input type="range" min="0" max="2000" id="ran9">
     <input type="range" min="0" max="2000" id="ran10"> -->
-
+<!-- 
+    <div class="buttons_bets" style="display: none;">
+        <button class="btn" role="button">+1</button>
+        <button class="btn" role="button">+5</button>
+        <button class="btn" role="button">+10</button>
+        <button class="btn" role="button">+50</button>
+        <button class="btn" role="button">+100</button>
+    </div>
         
 
     <div class="load" style="display: none;">
@@ -56,13 +79,46 @@
         <img src='./art/arrow_down.png'>
         <img src='./art/win.png'>
     </div>
+    
+    <main class="tela"  style="display: none;">
+        <section id="selecao_cavalos" style="display: none;">
+            <div id="cavalo_0" class="box cavalo cavalo_0"></div>
+            <div id="cavalo_1" class="box cavalo cavalo_1"></div>
+            <div id="cavalo_2" class="box cavalo cavalo_2"></div>
+            <div id="cavalo_3" class="box cavalo cavalo_3"></div>
+            <div id="cavalo_4" class="box cavalo cavalo_4"></div>
+            <div id="cavalo_5" class="box cavalo cavalo_5"></div>
+            <div id="modalidade_1" class="box modalidade_1"></div>
+            <div id="modalidade_2" class="box modalidade_2"></div>
+            <div id="modalidade_3" class="box modalidade_3"></div>
+            <div id="btn_confirmar_cavalos" class="box btn_confirmar"></div>
+        </section>
+
+        <section id="aposta" class="aposta" style="display: none;">
+            <div id="btn_volta" class="box btn_volta"></div>
+            <div id="btn_um" class="box btn_um"></div>
+            <div id="btn_cinco" class="box btn_cinco"></div>
+            <div id="btn_dez" class="box btn_dez"></div>
+            <div id="btn_cinquenta" class="box btn_cinquenta"></div>
+            <div id="btn_cem" class="box btn_cem"></div>
+            <div id="btn_quinhentos" class="box btn_quinhentos"></div>
+            <div id="btn_reset" class="box btn_reset"></div>
+            <div id="btn_cofirmar_aposta" class="box btn_cofirmar_aposta"></div>
+
+
+       <div id="cavalo_2" class="box cavalo cavalo_2"></div> -->
+            <!-- <div id="btn_confirmar" class="box btn_confirmar"></div> -->
+        </section> 
         
+    </main>
+
     <div class="janela">
         <canvas id="canvas" class="canvas"></canvas>
     </div>
     
-    <button style="padding:10px;position: fixed; top: 20px; left: 0px; z-index: 10; " onclick="setInterval(()=>{ ran.value = parseFloat(ran.value)+0.01 }, 10)">go</button>
-    <input id="ran" type="range" value="0" max="59" step="0.01" style="width:100%;position: fixed; top: 0px; left: 0px; z-index: 10;">
+    <!-- none -->
+    <!-- <button style="padding:10px;position: fixed; top: 20px; left: 0px; z-index: 10; " onclick="setInterval(()=>{ ran.value = parseFloat(ran.value)+0.01 }, 10)">go</button> -->
+    <!-- <input id="ran" type="range" value="0" max="59" step="0.01" style="width:100%;position: fixed; top: 0px; left: 0px; z-index: 10;"> -->
 
 </body>
 </html>
